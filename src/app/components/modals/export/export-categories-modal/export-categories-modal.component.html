@@ -1,0 +1,18 @@
+<div class="modal-header">
+    <div class="modal-headline">
+        <h5 class="modal-title" >{{title}}</h5>
+        <span class="instruction">{{description}}</span>
+    </div>
+
+</div>
+<div class="modal-body">
+    <label>Order By: <span class="optional"> (Optional)</span></label>
+    <select name="filter_by" class="custom-select" [(ngModel)]="filters.order" required>
+        <option *ngFor="let order of orderOptionsList" [ngValue]="order.value">{{order.label}}</option>
+    </select>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="activeModal.close('Close click')">Close</button>
+    <button type="button" class="btn btn-primary" (click)="onExport(filters)">Export</button>
+</div>

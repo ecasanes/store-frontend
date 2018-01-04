@@ -1,0 +1,85 @@
+.main-panel {
+  margin-left: 250px;
+
+  .panel-content {
+    min-height: 400px;
+  }
+
+}
+
+.panel-content {
+  position: relative;
+  padding: 50px 0;
+  overflow: auto;
+}
+
+.panel-header {
+  background: #fff;
+  padding: 25px 30px 0;
+  border-bottom: 2px solid #D7DDE2;
+  overflow: auto;
+  width: 100%;
+}
+
+.panel-header h1 {
+  font-size: 20px;
+  color: #5A5B5F;
+  letter-spacing: 0;
+}
+
+.panel-header .sub-info {
+  display: block;
+  font-size: 13px;
+  color: #989898;
+  letter-spacing: 0;
+}
+
+.panel-header .actions {
+  float: right;
+  margin-top: 11px;
+}
+
+.panel-header .details {
+  float: left;
+}
+
+.panel-nav {
+  width: 100%;
+  float: left;
+  padding-top: 20px;
+}
+
+.panel-nav ul {
+  padding: 0;
+  list-style: none;
+}
+
+.panel-nav ul li {
+  float: left;
+  padding-bottom: 10px;
+  font-size: 12px;
+  margin: 0 14px;
+}
+
+.panel-nav ul li.active {
+  border-bottom: 2px solid #00A1FE;
+  padding-bottom: 8px;
+}
+
+.panel-nav ul li a {
+  color: #5A5B5F;
+}
+
+.panel-nav ul li:hover {
+  border-bottom: 2px solid #00A1FE;
+  padding-bottom: 8px;
+}
+
+.panel-header {
+  .actions {
+    select {
+      padding-top:4px;
+      height:30px;
+    }
+  }
+}

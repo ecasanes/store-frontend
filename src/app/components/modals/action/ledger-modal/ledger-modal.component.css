@@ -1,0 +1,180 @@
+.modal-header {
+    padding: 0px;
+    color: #7b7d7f;
+    font-weight: 600;
+}
+
+/* .myheader{
+    min-height: 50px;
+    padding: 20px 30px 30px 20px;
+    color: #8392A0;
+} */
+
+.modal-body {
+    color: #707070;
+    padding: 0px 40px 0px 40px;
+}
+
+.myinput > .radio label {
+    font-size: 13px;
+    font-weight: 400;
+}
+
+input[type='radio'] {
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 1px solid darkgray;
+    border-radius: 50%;
+    outline: none;
+    background-color: #ffffff;
+    box-shadow: 0 0 1px 0px #a3a4a4;
+}
+
+/* input[type='radio']:hover {
+  box-shadow:0 0 5px 0px orange inset;
+} */
+
+input[type='radio']:before {
+    content: '';
+    display: block;
+    width: 86%;
+    height: 86%;
+    margin: 1px 0px 0px 1px;
+    border-radius: 50%;
+}
+
+input[type='radio']:checked:before {
+    background: #4a90e2;
+}
+
+.my-input.form-group h1 {
+    font-size: 16px;
+    font-weight: 800;
+    margin: inherit;
+
+}
+
+.my-input.form-group {
+    padding-top: 20px;
+}
+
+.form-control-static {
+    font-size: 14px;
+}
+
+.form-group {
+    margin-bottom: 0rem;
+}
+
+.form-group.radio-btn {
+    font-size: 12px;
+}
+
+.form-btn {
+    padding-left: 50px;
+}
+
+.myinput label {
+    font-size: 14px;
+    margin: inherit;
+    margin-bottom: 5px;
+}
+
+.myinput > .form-control {
+    border-radius: 10px;
+    border: 1px solid #ffffff;
+}
+
+.myinput.form-group {
+    width: 20%;
+    margin-top: 4px;
+    /* background-color: red; */
+}
+
+.myinput.form-group label {
+    font-size: 16px;
+}
+
+.myinput.form-btn {
+    width: 12%;
+    /* background-color: white; */
+}
+
+.form-group > .myinput {
+    float: left;
+    padding: 5px;
+    font-size: 14px;
+}
+
+.form-group.input-form {
+    /* padding-right: 80px; */
+    width: 100%;
+    padding: 15px 0px 5px 40px;
+    /* background-color: green; */
+
+}
+
+thead {
+    text-align: left;
+}
+
+.form-control-static {
+    font-size: 22px;
+    font-weight: 600;
+    color: black;
+}
+
+.form-control.input-one {
+    width: 200px;
+    height: 40px;
+}
+
+.form-control.inputdate {
+    width: 140px;
+    height: 40px;
+}
+
+/* @media (min-width: 992px){
+    .col-lg-12 {
+        padding: 0px 30px 10px 30px;
+    }
+} */
+.table-striped > tbody > tr:nth-child(odd) > td,
+.table-striped > tbody > tr:nth-child(odd) > th {
+    background-color: #ffffff;
+    border: none;
+}
+
+.table-striped > tbody > tr:nth-child(even) > td,
+.table-striped > tbody > tr:nth-child(even) > th {
+    background-color: #f8f8f8;
+    border: none;
+}
+
+table.table thead th {
+    border-top: none;
+    border-bottom: 2px solid #979797;
+    font-size: 15px;
+}
+
+.table td {
+    padding: 10px 50px 10px 5px;
+}
+
+.table th {
+    padding: 10px 10px 10px 0;
+}
+
+.td-plus {
+    color: #417505;
+}
+
+.td-minus {
+    color: #d0021b;
+}
+
+.ledger-body {
+    padding-top: 20px;
+    min-height: 100px;
+}

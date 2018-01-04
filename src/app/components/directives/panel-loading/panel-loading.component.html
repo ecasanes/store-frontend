@@ -1,0 +1,13 @@
+<div class="panel-loader centered" *ngIf="load">
+
+  <div class="panel-loader-normal" *ngIf="type=='normal'">
+    <img *ngIf="type=='normal'" style="width:20px;height:20px;" src="assets/loading_apple.gif"/>
+    {{loadingText}}
+  </div>
+
+  <div class="panel-loader-calculate" *ngIf="type=='calculate'">
+    <img *ngIf="type=='calculate'" style="width:150px;height:150px;" src="assets/loader.gif"/>
+  </div>
+
+
+</div>

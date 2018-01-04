@@ -1,0 +1,36 @@
+<div class="modal-header">
+    <div class="modal-headline">
+        <h5 class="modal-title" >{{title}}</h5>
+        <span class="instruction">{{description}}</span>
+    </div>
+
+</div>
+<div class="modal-body">
+    <label>Filter By Category: <span class="optional"> (Optional)</span></label>
+    <select name="filter_by" class="custom-select" [(ngModel)]="filters.category_id" required>
+        <option *ngFor="let category of categoryList" [ngValue]="category.id">{{category.name}}</option>
+    </select>
+
+    <label>Filter By Product: <span class="optional"> (Optional)</span></label>
+    <select name="filter_by" class="custom-select" [(ngModel)]="filters.variation_id" required>
+        <option *ngFor="let product of productList" [ngValue]="product.product_variation_id">
+            {{product.name}}
+            ({{product.size | number}} {{product.metrics}})
+        </option>
+    </select>
+
+    <label>Sort By: <span class="optional"> (Optional)</span></label>
+    <select name="filter_by" class="custom-select" [(ngModel)]="filters.sort" required>
+        <option *ngFor="let sort of sortOptionsList" [ngValue]="sort.value">{{sort.label}}</option>
+    </select>
+
+    <label>Order By: <span class="optional"> (Optional)</span></label>
+    <select name="filter_by" class="custom-select" [(ngModel)]="filters.order" required>
+        <option *ngFor="let order of orderOptionsList" [ngValue]="order.value">{{order.label}}</option>
+    </select>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="activeModal.close('Close click')">Close</button>
+    <button type="button" class="btn btn-primary" (click)="onExport(filters)">Export</button>
+</div>

@@ -1,0 +1,199 @@
+<div class="sidebar">
+    <div class="branding">
+        <div class="logo"><img src="assets/logo-icon.png" alt=""></div>
+        <div class="company"> Augustus Perfume</div>
+    </div>
+    <div class="main-navigation">
+        <ul>
+            <li class="nav-label">MAIN NAVIGATION</li>
+
+            <a *ngIf="hasCompanyPrivileges" (click)="setCurrentNav('dashboard')" [class.selected]="currentNav=='dashboard'">
+                <li>
+                    <div class="icon"><i class="fa fa-tachometer" aria-hidden="true"></i></div>
+                    <div class="label">DASHBOARD</div>
+                </li>
+            </a>
+
+            <a *ngIf="hasCompanyPrivileges"
+               class="submenu" data-dropdown="users" (click)="setCurrentNav('users')"
+               [class.selected]="currentNav=='users'">
+                <li id="users">
+                    <div class="icon"><i class="fa fa-users" aria-hidden="true"></i></div>
+                    <div class="label">USERS</div>
+                    <div class="sub-items" [class.show]="hasNavs(['users','stores','customers','staffs','managers'])">
+
+                        <div class="sub-item" data-id="stores" (click)="setCurrentNav('stores')">
+                            <div class="icon"><i class="fa fa-building" aria-hidden="true"></i></div>
+                            <div class="label">STORE</div>
+                        </div>
+
+                        <div class="sub-item" data-id="customers" (click)="setCurrentNav('customers')">
+                            <div class="icon"><i class="fa fa-user" aria-hidden="true"></i></div>
+                            <div class="label">CUSTOMERS</div>
+                        </div>
+
+                        <div class="sub-item" data-id="staff" (click)="setCurrentNav('staffs')">
+                            <div class="icon"><i class="fa fa-briefcase" aria-hidden="true"></i></div>
+                            <div class="label">STAFF</div>
+                        </div>
+
+                        <div class="sub-item" data-id="managers" (click)="setCurrentNav('managers')">
+                            <div class="icon"><i class="fa fa-user-circle" aria-hidden="true"></i></div>
+                            <div class="label">COMPANY MANAGERS</div>
+                        </div>
+
+                        <div class="sub-item" data-id="franchisees" (click)="setCurrentNav('franchisees')">
+                            <div class="icon"><i class="fa fa-address-card-o" aria-hidden="true"></i></div>
+                            <div class="label">FRANCHISEES</div>
+                        </div>
+
+                    </div>
+                </li>
+            </a>
+
+            <a *ngIf="hasCompanyPrivileges || hasCompanyStaffInventoryPrivileges"
+               class="submenu" data-dropdown="inventory"
+               (click)="setCurrentNav('inventory')"
+               [class.selected]="currentNav=='inventory'">
+                <li id="inventory">
+                    <div class="icon"><i class="fa fa-tasks" aria-hidden="true"></i></div>
+                    <div class="label">INVENTORY</div>
+                    <div class="sub-items" [class.show]="hasNavs(['inventory','products','deliveries','prices','stocks'])">
+
+                        <div class="sub-item" data-id="products" (click)="setCurrentNav('products')">
+                            <div class="icon"><i class="fa fa-product-hunt" aria-hidden="true"></i></div>
+                            <div class="label">PRODUCTS</div>
+                        </div>
+
+                        <div class="sub-item" data-id="categories" (click)="setCurrentNav('categories')">
+                            <div class="icon"><i class="fa fa-asterisk" aria-hidden="true"></i></div>
+                            <div class="label">CATEGORIES</div>
+                        </div>
+
+                        <div class="sub-item" data-id="stocks" (click)="setCurrentNav('stocks')">
+                            <div class="icon"><i class="fa fa-bar-chart" aria-hidden="true"></i></div>
+                            <div class="label">STOCKS</div>
+                        </div>
+
+                        <div class="sub-item" data-id="deliveries" (click)="setCurrentNav('deliveries')">
+                            <div class="icon"><i class="fa fa-truck" aria-hidden="true"></i></div>
+                            <div class="label">DELIVERIES</div>
+                        </div>
+
+                        <div class="sub-item" data-id="prices" (click)="setCurrentNav('prices')">
+                            <div class="icon"><i class="fa fa-usd" aria-hidden="true"></i></div>
+                            <div class="label">PRICING</div>
+                        </div>
+
+                    </div>
+                </li>
+            </a>
+            <a *ngIf="hasCompanyPrivileges || hasCompanyStaffSalesPrivileges"
+               (click)="setCurrentNav('sales')" [class.selected]="hasNavs(['sales'])">
+                <li>
+                    <div class="icon"><i class="fa fa-shopping-cart" aria-hidden="true"></i></div>
+                    <div class="label">SALES</div>
+                </li>
+            </a>
+            <a *ngIf="hasCompanyPrivileges || hasCompanyStaffSalesPrivileges"
+               (click)="setCurrentNav('adjustments')" [class.selected]="hasNavs(['adjustments'])">
+                <li>
+                    <div class="icon"><i class="fa fa-random" aria-hidden="true"></i></div>
+                    <div class="label">ADJUSTMENTS</div>
+                </li>
+            </a>
+            <a *ngIf="hasCompanyPrivileges"
+               (click)="setCurrentNav('reports')" [class.selected]="hasNavs(['reports'])">
+                <li>
+                    <div class="icon"><i class="fa fa-bar-chart" aria-hidden="true"></i></div>
+                    <div class="label">REPORTS</div>
+                </li>
+            </a>
+            <!--<a *ngIf="hasCompanyPrivileges"-->
+               <!--(click)="setCurrentNav('activities')" [class.selected]="hasNavs(['activities'])">-->
+                <!--<li>-->
+                    <!--<div class="icon"><i class="fa fa-history" aria-hidden="true"></i></div>-->
+                    <!--<div class="label">ACTIVITY LOGS</div>-->
+                <!--</li>-->
+            <!--</a>-->
+        </ul>
+    </div>
+    <div *ngIf="hasCompanyPrivileges || hasCompanyStaffInventoryPrivileges" class="main-navigation nav-cat"
+         style="border-bottom: none">
+         <ul>
+            <li class="nav-label">CATEGORIES</li>
+         </ul>
+            <div class="scrollbar" id="style-1">
+                <div class="force-overflow">
+                    <ul>
+                        <div *ngFor="let category of categories">
+                            <a [class.selected]="router.url == '/products/categories/'+category.id"
+                            [routerLink]="['/products/categories/'+category.id]">
+                                <li>
+                                    <div class="icon"><span class="box" style="background: #00C094"></span></div>
+                                    <div class="label" [ngStyle]="{'style':category.color}">{{category.name}}</div>
+                                </li>
+                            </a>
+                        </div>
+                    </ul>
+                </div>
+
+            </div>
+<!--           
+              
+         <div class="list">
+           
+         </div> -->
+    </div>
+</div>
+
+<div class="main-panel">
+    <section class="search-bar" [class.disabled]="!searchIsOn">
+        <i class="search-icon fa fa-search" aria-hidden="true"></i>
+        <input type="text" placeholder="Search here" (keyup)="checkSearchKey()" (keyup.enter)="onSearchEnter()" name="searchKey" [(ngModel)]="searchKey" [disabled]="!searchIsOn">
+        <div class="header-nav">
+            <div class="logout">
+                <a (click)="logout()" class="signout"><i class="fa fa-sign-out" aria-hidden="true"></i></a>
+            </div>
+            <div class="notifications">
+
+                <a class="notification" (click)="toggleNotification()">
+                    <i class="fa fa-bell" aria-hidden="true"></i>
+                    <span *ngIf="notificationCount>0" class="badge badge-danger badge-pill">{{notificationCount}}</span>
+                </a>
+                <ul *ngIf="notificationActive" class="dropdown-menu dropdown-list animated fadeIn" role="menu"
+                    aria-labelledby="dLabel">
+
+                    <div class="notification-heading">
+                        <h4 class="menu-title">Notifications</h4>
+                    </div>
+                    <li class="divider"></li>
+                    <div class="notifications-wrapper">
+                        <a *ngFor="let notification of notifications; let i = index;" class="content">
+
+                            <div class="notification-item">
+                                <h4 class="item-title">{{notification.message}}</h4>
+                                <p class="item-info">{{notification.date | date}}</p>
+                            </div>
+
+                        </a>
+
+                    </div>
+                    <li class="divider"></li>
+                    <div class="notification-footer">
+                        <h4 class="menu-title" (click)="onViewAll()">
+                            View all
+                            <i class="glyphicon glyphicon-circle-arrow-right"></i>
+                        </h4>
+                    </div>
+                </ul>
+            </div>
+            <!--<div class="account-info">
+                <a class="account">Augustus <i class="fa fa-angle-down" aria-hidden="true"></i></a>
+            </div>-->
+
+
+        </div>
+    </section>
+    <router-outlet></router-outlet>
+</div>

@@ -1,0 +1,43 @@
+<div class="modal-header">
+    <div class="modal-headline">
+        <h5 class="modal-title">UPDATE DELIVERY</h5>
+        <span class="instruction">Fill up the required field below to update delivery.</span>
+    </div>
+
+</div>
+<div class="modal-footer" style="border-radius: 0">
+    <button type="button" class="btn btn-secondary" (click)="activeModal.close('Close click')">Close</button>
+    <button type="button" class="btn btn-primary" (click)="onSave()">Save changes</button>
+</div>
+<div class="modal-body">
+    <form>
+        <label>Store / Branch<span class="important">*</span></label>
+        <select [(ngModel)]="delivery.branch_id" name="branch_id" class="custom-select">
+            <option [ngValue]="null"> Select Store / Branch</option>
+            <option *ngFor="let branch of branches" [ngValue]="branch.id">{{branch.name}}</option>
+        </select>
+        <error-handler [errors]="errorResponse.errors" [validate]="'branch_id'"></error-handler>
+        <alert-error-handler [errorResponse]="errorResponse" [type]="'bullet'"></alert-error-handler>
+        <label>Products<span class="important">*</span></label>
+
+        <div class="entries">
+            <div class="entry" *ngFor="let item of delivery.deliveries; let i=index">
+                <div class="left">
+                    <select (change)="test(item)"  name="product_variation_id_{{i}}" [(ngModel)]="item.product_variation_id">
+                        <option *ngFor="let variation of productVariations" [ngValue]="variation.product_variation_id">
+                            {{variation.name}} ({{variation.size | number}} {{variation.metrics}})
+                        </option><!-- - {{variation.company_quantity | number}} left -->
+                    </select>
+                </div>
+                <div class="right">
+                    <input type="number" name="quantity_{{i}}" placeholder="Quantity" [(ngModel)]="item.quantity">
+                    <a (click)="onRemoveDeliveryItem(i)">
+                        <i class="fa fa-minus-circle" aria-hidden="true"></i>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+        <div align="right"><a class="link link-normal" (click)="onAddDeliveryItem()">+ Add Item</a></div>
+    </form>
+</div>

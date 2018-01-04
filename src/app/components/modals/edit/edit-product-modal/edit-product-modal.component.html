@@ -1,0 +1,58 @@
+<div class="modal-header">
+    <div class="modal-headline">
+        <h5 class="modal-title">EDIT PRODUCT</h5>
+        <span class="instruction">Fill up the required field below to update.</span>
+    </div>
+
+</div>
+<div class="modal-body">
+
+    <form #f="ngForm">
+
+        <label>Product Name<span class="important">*</span></label>
+        <input type="text" name="name" required [(ngModel)]="product.name">
+        <error-handler [errors]="errorResponse.errors" [validate]="'name'"></error-handler>
+
+        <label>Code<span class="important">*</span></label>
+        <input type="text" name="code" required [(ngModel)]="product.code">
+        <error-handler [errors]="errorResponse.errors" [validate]="'code'"></error-handler>
+
+        <label>Category <span class="important">*</span></label>
+
+        <select name="product_category_id" class="custom-select" [(ngModel)]="product.product_category_id" required>
+            <option *ngFor="let cat of categories" [ngValue]="cat.id">{{cat.name}}</option>
+        </select>
+        <error-handler [errors]="errorResponse.errors" [validate]="'product_category_id'"></error-handler>
+
+        <label>Image <span class="optional">Optional</span></label>
+        <label class="custom-file">
+            <input type="file" id="file" class="custom-file-input" name="image_url" (change)="onSelectedFile($event)">
+            <span class="custom-file-control">{{productImageName}}</span>
+        </label>
+
+        <h2>Product Variations</h2>
+
+        <hr>
+
+        <label>Size<span class="important">*</span></label>
+        <input type="number" name="size" [(ngModel)]="product.size" required>
+
+        <!--<label>Quantity<span class="important">*</span></label>
+        <input type="number" name="quantity" [(ngModel)]="product.company_quantity" required>-->
+
+        <label>Cost Price<span class="important">*</span></label>
+        <input type="number" name="cost_price" [(ngModel)]="product.cost_price" required>
+
+        <label>Selling Price<span class="important">*</span></label>
+        <input type="number" name="selling_price" [(ngModel)]="product.selling_price" required>
+
+        <label>Franchisee Price<span class="important">*</span></label>
+        <input type="number" name="franchisee_price" [(ngModel)]="product.franchisee_price" required>
+
+
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="activeModal.close('Close click')">Close</button>
+    <button type="button" class="btn btn-primary" (click)="onUpdate()">Save changes</button>
+</div>

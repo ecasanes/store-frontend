@@ -1,0 +1,34 @@
+<div class="login-container">
+    <div class="container flex-direction">
+        <div class="content-one">
+            <div class="icon">
+                <img src="./assets/logo-icon.png"/>
+                <h3><b>MERCURY APP</b></h3>
+                <h4><b>Inventory Monitoring System</b></h4>
+            </div>
+        </div>
+        <div class="content-two">
+            <div class="login-wrapper">
+                <div class="form-wrapper">
+                    <form class="login-form" (ngSubmit)="signIn(f)" #f="ngForm">
+                        <span id="error">{{error}}</span>
+                        <span id="success"></span>
+                        <label><b>EMAIL ADDRESS</b></label>
+                        <input type="email" name="email" id="email" ngModel required>
+                        <error-handler [errors]="errorResponse.errors" [validate]="'email'"></error-handler>
+                        <label><b>PASSWORD</b></label>
+                        <input type="password" name="password" id="password" ngModel required>
+                        <error-handler [errors]="errorResponse.errors" [validate]="'password'"></error-handler>
+                        <button *ngIf="!signingIn" type="submit" class="btn-main" id="signin">
+                            LOGIN
+                        </button>
+                        <button *ngIf="signingIn" type="submit" class="btn-loading" [disabled]="!f.valid">
+                            <img src="./assets/loading_apple.gif" style="width:19px;height:19px;">
+                            PROCESSING
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

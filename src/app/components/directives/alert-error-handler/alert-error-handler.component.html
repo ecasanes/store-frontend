@@ -1,0 +1,10 @@
+<ul class="error" *ngIf="type == 'bullet' && errorResponse.message.length>0">
+  <li>{{errorResponse.message}}</li>
+</ul>
+
+<div class="alert alert-danger" *ngIf="type == 'alert' && errorResponse.message.length>0">
+  <button type="button" class="close" (click)="onDismiss()" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+  {{errorResponse.message}}
+</div>

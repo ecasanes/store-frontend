@@ -1,0 +1,30 @@
+<div class="modal-header">
+    <div class="modal-headline">
+        <h5 class="modal-title">Deliver {{product.name}} ({{product.size | number}} {{product.metrics}}) to {{branch.name}}</h5>
+        <span class="instruction">Fill up the required field below to confirm delivery.</span>
+    </div>
+</div>
+<div class="modal-body">
+
+    <alert-error-handler [errorResponse]="errorResponse"></alert-error-handler>
+
+    <div class="form-group form-inline">
+        <label for="quantity" class="control-label">Quantity: </label>
+        <input style="width:100px;margin-left:10px;" type="number" min="1" class="form-control" id="quantity" name="quantity" [(ngModel)]="quantity">
+    </div>
+
+    <div class="form-group" *ngIf="branch.type == franchiseeFlag">
+        <label for="invoice_no" class="control-label">Invoice No: </label>
+        <input class="form-control" id="invoice_no" name="invoice_no" [(ngModel)]="invoiceNo">
+    </div>
+
+    <div class="form-group">
+        <label for="remarks" class="control-label">Remarks: </label>
+        <textarea min="1" class="form-control" id="remarks" name="remarks" [(ngModel)]="remarks"></textarea>
+    </div>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="activeModal.close('Close click')">Close</button>
+    <button type="button" class="btn btn-primary" (click)="onDeliver()" [disabled]="updating">Save changes</button>
+</div>

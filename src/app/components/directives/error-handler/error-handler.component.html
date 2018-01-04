@@ -1,0 +1,7 @@
+<div class="errors" *ngIf="errors">
+  <ul>
+    <li *ngFor="let singleError of errors[validate]">
+      {{ singleError }}
+    </li>
+  </ul>
+</div>

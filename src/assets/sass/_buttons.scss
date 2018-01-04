@@ -1,0 +1,41 @@
+.btn-action {
+  border: 2px solid #D7DDE2;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #929AB0;
+  letter-spacing: 0;
+  background: transparent;
+  padding: 4px 15px;
+  font-family: 'Lato', sans-ser;
+  cursor: pointer;
+}
+
+.btn {
+  outline: none !important;
+
+  &.btn-bordered{
+    background:#ffffff;
+  }
+
+}
+
+button {
+  cursor: pointer;
+
+  .btn {
+    &.btn-submit {
+      background: #30394B;
+      color: #fff;
+      width: 100%;
+    }
+  }
+
+}
+
+.custom-file-input {
+  cursor: pointer;
+}
+
+.color-picker{
+  height: 40px;
+}

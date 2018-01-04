@@ -1,0 +1,87 @@
+table {
+
+  &.table {
+
+    th {
+      font-size: 13px;
+    }
+
+    td {
+
+      font-size: 13px;
+
+      &.actions {
+
+        a {
+          font-size: 14px;
+          color: #929AB0;
+          margin-left: 1px;
+          margin-right: 1px;
+          padding: 3px 4px;
+          /* border: 1px solid #ccc; */
+          /* border-radius: 3px; */
+
+          &:hover{
+            i{
+              &.fa{
+                &.fa-minus{
+                  color: $warning;
+                }
+                &.fa-plus,
+                &.fa-check,
+                &.fa-check-square-o{
+                  color:$success;
+                }
+                &.fa-trash{
+                  color:$danger;
+                }
+                &.fa-pencil{
+                  color:$primary;
+                }
+              }
+            }
+          }
+
+
+
+
+        }
+      }
+
+      .profit-col {
+        background: #ECF2F6;
+      }
+
+      span{
+        &.delivery-status{
+          text-transform: uppercase;
+          cursor:pointer;
+        }
+      }
+
+    }
+
+    tr {
+      &:hover {
+        background: #f9fcff;
+      }
+    }
+
+    thead {
+
+      tr {
+        &:hover {
+          background: transparent !important;
+        }
+      }
+
+      th {
+        border-bottom: 3px solid #D7DDE2;
+        color: #757d90;
+      }
+
+    }
+
+  }
+
+}

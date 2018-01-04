@@ -1,0 +1,59 @@
+<section class="panel-header">
+    <div class="panel-details">
+        <!--<div class="details">
+            <h1>Nothing to do here</h1>
+            &lt;!&ndash;<span class="sub-info"><i class="fa fa-th-large" aria-hidden="true"></i> {{description}}</span>&ndash;&gt;
+        </div>-->
+
+        <div class="actions">
+            <!--<button class="btn-action">EXPORT DATA</button>-->
+        </div>
+        <div class="panel-nav">
+            <ul>
+                <li [class.active]="router.url == '/activities'">
+                    <a [routerLink]="['/activities']">ALL</a>
+                </li>
+                <li *ngFor="let transaction of transactionActivityTypeList" [class.active]="router.url == '/activities/transaction/'+ transaction.id">
+                    <a [routerLink]="['/activities/transaction', transaction.id]">{{transaction.name}}</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
+<section class="panel-content">
+    <div class="container">
+        <p *ngIf="maxLength<=0">No Logs Found</p>
+        <table class="table table-responsive" *ngIf="maxLength>0">
+            <thead>
+            <tr>
+                <th>DATE</th>
+                <th>ACTIVITY</th>
+                <th>MESSAGE</th>
+                <th>NAME</th>
+                <th>EMAIL</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let activity of activityList">
+                <td>{{activity.date | date}}</td>
+                <td>{{activity.activity_log_type_name}}</td>
+                <td>{{activity.message}}</td>
+                <td>{{activity.user_firstname}} {{activity.user_lastname}}</td>
+                <td>{{activity.user_email}}</td>
+                <!--<td class="actions">-->
+
+                    <!--<a (click)="onEdit(category)"><i class="fa fa-pencil" aria-hidden="true"></i></a>-->
+                    <!--<a (click)="onDelete(category.id)"><i class="fa fa-trash" aria-hidden="true"></i></a>-->
+
+                <!--</td>-->
+            </tr>
+            </tbody>
+        </table>
+        <div class="pagination" *ngIf="maxLength>0">
+            <ngb-pagination [pageSize]="limit" (pageChange)="selectPage($event)"
+                            [collectionSize]="maxLength" [(page)]="currentPage" [maxSize]="4"
+                            [rotate]="true" [ellipses]="false" [boundaryLinks]="false"></ngb-pagination>
+        </div>
+    </div>
+</section>
+

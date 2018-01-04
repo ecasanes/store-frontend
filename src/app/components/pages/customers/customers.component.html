@@ -1,0 +1,68 @@
+
+<section class="panel-header">
+    <div class="panel-details">
+        <div class="details">
+            <h1>{{title}}</h1>
+            <span class="sub-info"><i class="fa fa-th-large" aria-hidden="true"></i> {{description}}</span>
+        </div>
+        <div class="actions">
+            <button class="btn-action" (click)="openAddCustomersModal()">ADD CUSTOMER</button>
+            <button class="btn-action" (click)="openExportCustomersModal(customers)">EXPORT DATA</button>
+        </div>
+    </div>
+    <div class="panel-nav">
+        <ul>
+            <li [class.active]="router.url == '/customers'">
+                <a [routerLink]="['/customers']">ALL</a>
+            </li>
+            <li *ngFor="let branch of branchList" [class.active]="router.url == '/customers/branch/'+ branch.id">
+                <a [routerLink]="['/customers/branch/',branch.id]">{{branch.name}}</a>
+            </li>
+        </ul>
+    </div>
+</section>
+<section class="panel-content">
+
+    <panel-loading [load]="!customerLoaded"></panel-loading>
+
+    <div class="container">
+
+        <p class="animated fadeIn" *ngIf="customers.length<=0 && customerLoaded">No customers found</p>
+
+        <table class="table table-responsive animated fadeIn" *ngIf="customers.length>0">
+            <thead>
+            <tr>
+                <th>NAME</th>
+                <!--NOTE: Column here is stated as account no.-->
+                <!--but customers only have customer IDs-->
+                <!--<th>ACCOUNT NO.</th>-->
+                <th>CUSTOMER ID</th>
+                <th>EMAIL</th>
+                <th>BRANCH REGISTERED</th>
+                <th>ADDRESS</th>
+                <th>PHONE</th>
+                <th>ACTIONS</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let customer of customers">
+                <th>{{customer.firstname + ' ' + customer.lastname}}</th>
+                <td># {{customer.customer_id}}</td>
+                <td>{{customer.email}}</td>
+                <td>{{customer.branch_registered}}</td>
+                <td>{{customer.address}}</td>
+                <td>{{customer.phone}}</td>
+                <td class="actions">
+                    <a (click)="onEdit(customer)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    <a (click)="onDelete(customer.id)"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="pagination" *ngIf="maxLength > 0">
+            <ngb-pagination [pageSize]="limit" (pageChange)="selectPage($event)"
+                            [collectionSize]="maxLength" [(page)]="currentPage" [maxSize]="4"
+                            [rotate]="true" [ellipses]="false" [boundaryLinks]="false"></ngb-pagination>
+        </div>
+    </div>
+</section>

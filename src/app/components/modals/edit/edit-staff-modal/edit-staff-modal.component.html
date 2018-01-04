@@ -1,0 +1,105 @@
+<div class="modal-header">
+    <div class="modal-headline">
+        <h5 class="modal-title">{{title}}</h5>
+        <span class="instruction">{{instruction}}</span>
+    </div>
+
+</div>
+<div class="modal-body">
+    <form #f="ngForm">
+        <!--First Name-->
+        <label>First Name <span class="important">*</span></label>
+        <input type="text" name="firstname" [(ngModel)] = "staff.firstname" required >
+        <error-handler [errors]="errorResponse.errors" [validate]="'firstname'"></error-handler>
+
+        <!--Last Name-->
+        <label>Last Name <span class="important">*</span></label>
+        <input type="text" name="lastname" [(ngModel)] = "staff.lastname" required>
+        <error-handler [errors]="errorResponse.errors" [validate]="'lastname'"></error-handler>
+
+        <!--Email-->
+        <label>Email<span class="important">*</span></label>
+        <input type="email" name="email" [(ngModel)] = "staff.email">
+        <error-handler [errors]="errorResponse.errors" [validate]="'email'"></error-handler>
+
+        <!--Void Privilege-->
+        <label>Can void transactions?<span class="important">*</span></label>
+        <label class="custom-control custom-radio">
+            <input id="all-customers" name="can_void" type="radio" class="custom-control-input"
+                   [value]="1"
+                   [(ngModel)]="staff.can_void">
+            <span class="custom-control-indicator"></span>
+            <span class="custom-control-description">Yes</span>
+        </label>
+        <label class="custom-control custom-radio">
+            <input id="members-only" name="can_void" type="radio" class="custom-control-input"
+                   [value]="0"
+                   [(ngModel)]="staff.can_void">
+            <span class="custom-control-indicator"></span>
+            <span class="custom-control-description">No</span>
+        </label>
+        <error-handler [errors]="errorResponse.errors" [validate]="'can_void'"></error-handler>
+
+        <!-- Password -->
+        <div *ngIf="staff.can_void == 1">
+            <label>Password<span class="important">*</span></label>
+            <input type="password" name="password" [(ngModel)] = "staff.password">
+            <error-handler [errors]="errorResponse.errors" [validate]="'password'"></error-handler>
+        </div>
+
+        <!--Has Multiple Access-->
+        <label>Belongs to multiple branches?</label>
+        <label class="custom-control custom-radio">
+            <input id="multiple-access-yes" name="has_multiple_access" type="radio" class="custom-control-input"
+                   [value]="1"
+                   [(ngModel)]="staff.has_multiple_access">
+            <span class="custom-control-indicator"></span>
+            <span class="custom-control-description">Yes</span>
+        </label>
+        <label class="custom-control custom-radio">
+            <input id="multiple-access-no" name="has_multiple_access" type="radio" class="custom-control-input"
+                   [value]="0"
+                   [(ngModel)]="staff.has_multiple_access">
+            <span class="custom-control-indicator"></span>
+            <span class="custom-control-description">No</span>
+        </label>
+        <error-handler [errors]="errorResponse.errors" [validate]="'has_multiple_access'"></error-handler>
+
+
+        <!--Password-->
+        <!--<label>Password<span class="important">*</span></label>-->
+        <!--<input type="password" name="password" [(ngModel)] = "staff.password" required>-->
+        <!--<error-handler [errors]="errorResponse.errors" [validate]="'password'"></error-handler>-->
+
+        <!--Branch-->
+        <label>Branch / Store <span class="important">*</span></label>
+        <select name="branch_id" class="custom-select" [(ngModel)] = "staff.branch_id" required>
+            <option *ngFor="let branch of branches" [ngValue]="branch.id">{{branch.name}}</option>
+        </select>
+        <error-handler [errors]="errorResponse.errors" [validate]="'branch_id'"></error-handler>
+
+        <!--Phone-->
+        <label>Phone Number <span class="optional">(Optional)</span></label>
+        <input type="number" name="phone" [(ngModel)] = "staff.phone">
+
+        <!--Address-->
+        <label>Address <span class="optional">(Optional)</span></label>
+        <input type="text" name="address" [(ngModel)] = "staff.address">
+
+        <!--City-->
+        <label>City <span class="optional">(Optional)</span></label>
+        <input type="text" name="city" [(ngModel)] = "staff.city">
+
+        <!--Province-->
+        <label>Province <span class="optional">(Optional)</span></label>
+        <input type="text" name="province" [(ngModel)] = "staff.province">
+
+        <!--Zip-->
+        <label>Zip Code <span class="optional">(Optional)</span></label>
+        <input type="text" name="zip" [(ngModel)] = "staff.zip">
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="activeModal.close('Close click')">Close</button>
+    <button type="button" class="btn btn-primary" (click)="onUpdate()">Save changes</button>
+</div>

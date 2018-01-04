@@ -1,0 +1,87 @@
+.sidebar {
+  position: fixed;
+  width: 250px;
+  top: 0;
+  left: 0;
+  background: #354053;
+  height: 100%;
+}
+
+.sidebar ul {
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar ul li {
+  list-style: none;
+  font-size: 11px;
+  color: #667387;
+  padding-left: 20px;
+
+}
+
+.sidebar a .label{
+  color: #C8D3E6 !important;
+  font-size: 13px !important;
+  float: left;
+  line-height: 26px;
+}
+
+.sidebar .icon {
+  font-size: 16px;
+  float: left;
+  width: 25px;
+  color: #C8D3E6;
+}
+
+
+
+.main-navigation {
+
+  width: 100%;
+  padding: 10px 0;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  border-bottom: 1px solid #30384C;
+  overflow: auto;
+
+  a {
+    float: left;
+    width: 100%;
+    padding: 10px 0;
+
+    &:hover,
+    &.selected{
+      background: #30394B;
+      border-left: 3px solid #00A9F2;
+      color: #fff !important;
+    }
+  }
+
+}
+
+
+.sub-items {
+  width: 100%;
+  float: left;
+  padding-left: 15px;
+  margin-top: 10px;
+  display: none;
+}
+
+.sub-items.show{
+  display: block;
+}
+
+.main-navigation a:hover li, .selected li{
+  padding-left: 17px !important;
+}
+
+.sub-item {
+  width: 100%;
+  overflow: auto;
+  padding: 4px;
+}
+
+.sidebar a .sub-items .label, .sidebar a .sub-items .icon {
+  font-size: 12px !important;
+}

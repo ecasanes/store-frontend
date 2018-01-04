@@ -1,0 +1,96 @@
+<section class="panel-header" style="padding-bottom: 25px;">
+    <div class="panel-details">
+        <div class="details">
+            <h1>{{panelTitle}}</h1>
+            <span class="sub-info"><i class="fa fa-th-large" aria-hidden="true"></i> {{ panelDescription }}</span>
+        </div>
+        <div class="actions">
+            <button class="btn-action" (click)="openAddDeliveryModal()">ADD DELIVERY</button>
+            <button class="btn-action" (click)="openReturnDeliveryModal()">RETURN DELIVERY</button>
+            <!--<button class="btn-action">EXPORT DATA</button>-->
+        </div>
+    </div>
+    <div class="panel-nav">
+
+    </div>
+</section>
+
+<section class="panel-content">
+
+    <panel-loading [load]="loadingData"></panel-loading>
+
+    <div class="container animated fadeIn" *ngIf="!loadingData">
+
+        <alert-error-handler [errorResponse]="errorResponse"></alert-error-handler>
+
+        <p *ngIf="deliveries.length<=0">No deliveries added yet</p>
+
+        <div class="deliveries" *ngIf="deliveries.length>0">
+
+            <table class="table table-responsive">
+                <thead>
+                <tr>
+                    <th>STORE</th>
+                    <th>ITEM QUANTITY</th>
+                    <th>STATUS</th>
+                    <th>REMARKS</th>
+                    <th>DATE</th>
+                    <th>ACTIONS</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let delivery of deliveries" [class.active]="currentDelivery.id==delivery.id"
+                    (click)="viewDeliveryItems(delivery)">
+                    <th>{{delivery.branch_name}}</th>
+                    <td>{{delivery.quantity | number}}</td>
+                    <td><span (click)="onUpdateStatus(delivery)" class="delivery-status {{delivery.status}}">{{delivery.status}}</span>
+                    </td>
+                    <td>{{delivery.remarks | truncate : 50 : '...'}}</td>
+                    <td>{{ delivery.delivery_date | date }}</td>
+                    <td class="actions">
+                        <a *ngIf="hasPendingDelivery(delivery)" (click)="onUpdateStatus(delivery)"><i class="fa fa-check-square-o" aria-hidden="true"></i></a>
+                        <a *ngIf="hasPendingDelivery(delivery)" (click)="onEdit(delivery)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                        <a *ngIf="hasPendingDelivery(delivery)" (click)="onVoid(delivery)"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                        <a *ngIf="ifConfirmedDelivery(delivery)" (click)="onReturnDeliveryItems(delivery)"><i class="fa fa-backward" aria-hidden="true"></i></a>
+                        <a (click)="onExportDeliveryItems(delivery)"><i class="fa fa-file-excel-o" aria-hidden="true"></i></a>
+                    </td>
+                </tr>
+
+                </tbody>
+            </table>
+
+            <div class="pagination" [hidden]="deliveryMaxLength<=0">
+                <ngb-pagination [pageSize]="" (pageChange)="selectPage($event)"
+                                [collectionSize]="deliveryMaxLength" [(page)]="deliveryCurrentPage" [maxSize]="4"
+                                [rotate]="true" [ellipses]="false" [boundaryLinks]="false"></ngb-pagination>
+            </div>
+
+        </div>
+
+        <div class="delivery-overview" [hidden]="deliveries.length<=0">
+            <p *ngIf="!currentDelivery.id">Select delivery row to display</p>
+            <p *ngIf="currentDeliveryItems.length<=0 && currentDelivery.id">No Items to display</p>
+            <div class="delivery-info" id="delivery-1" *ngIf="currentDeliveryItems.length>0">
+                <div class="status">
+                    <span class="{{currentDelivery.status}}">{{ currentDelivery.status }}</span>
+                </div>
+                <div class="details">
+                    <span>Delivered to <b>{{currentDelivery.branch_name}}</b> on <b>{{currentDelivery.delivery_date | date}}</b></span>
+                </div>
+                <div class="items">
+                    <h3>Items Delivered</h3>
+                    <ul class="delivered-items">
+                        <li *ngFor="let item of currentDeliveryItems">
+                            <span class="name">{{item.name}} ({{item.size | number}} {{item.metrics}})</span>
+                            <span class="qty">{{item.quantity | number}}</span>
+                        </li>
+                    </ul>
+                    <hr>
+                    <span class="total-items">TOTAL ITEMS DELIVERED: {{currentDeliveryItemsTotal}}</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</section>

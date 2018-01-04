@@ -1,0 +1,50 @@
+
+<section class="panel-header" style="padding-bottom: 25px;">
+    <div class="panel-details">
+        <div class="details">
+            <h1>{{title}}</h1>
+            <span class="sub-info"><i class="fa fa-th-large" aria-hidden="true"></i> {{description}}</span>
+        </div>
+        <div class="actions">
+            <button class="btn-action" (click)="openAddManagersModal()">ADD COMPANY MANAGER</button>
+            <!--<button class="btn-action">EXPORT DATA</button>-->
+        </div>
+    </div>
+    <div class="panel-nav">
+
+    </div>
+</section>
+<section class="panel-content">
+    <panel-loading [load]="!dataLoaded"></panel-loading>
+    <div class="container">
+        <p class="animated fadeIn" *ngIf="managers.length <= 0 && dataLoaded">No managers found</p>
+        <table class="table table-responsive" *ngIf="managers.length > 0">
+            <thead>
+            <tr>
+                <th>NAME</th>
+                <th>EMAIL</th>
+                <th>PERMISSIONS</th>
+                <th>PHONE</th>
+                <th>ACTIONS</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let manager of managers">
+                <th>{{manager.firstname + ' ' + manager.lastname}}</th>
+                <td>{{manager.email}}</td>
+                <td>{{manager.permission_names}}</td>
+                <td>{{manager.phone}}</td>
+                <td class="actions">
+                    <a (click) = "onEdit(manager)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    <a (click) = "onDelete(manager.id)"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div class="pagination" *ngIf="maxLength > 0">
+            <ngb-pagination [pageSize]="limit" (pageChange)="selectPage($event)"
+                            [collectionSize]="maxLength" [(page)]="currentPage" [maxSize]="4"
+                            [rotate]="true" [ellipses]="false" [boundaryLinks]="false"></ngb-pagination>
+        </div>
+    </div>
+</section>

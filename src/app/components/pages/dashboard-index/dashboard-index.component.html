@@ -1,0 +1,216 @@
+<!--
+<button class="btn btn-primary" (click)="getProducts()">GET ALL</button>
+<app-product *ngFor="let product of products" [product]="product" (productDeleted)="productDeleted($event)"></app-product>-->
+<section class="panel-header">
+    <div class="panel-details">
+        <div class="details">
+            <h1>
+                <!--{{panelTitle}}-->
+                <select name="order-by" class="custom-select" style="margin-bottom: 0;"
+                        [(ngModel)]="branchTransactions"
+                        (ngModelChange)="getReportsByBranch($event)">
+                    <option [value]="null">All Branches</option>
+                    <option *ngFor="let branch of branchList" [value]="branch.id">
+                        {{branch.name}}
+                    </option>
+                    <!--<optgroup label="FRANCHISEES">
+                        <option value="13">Robinsons Iligan</option>
+                    </optgroup>-->
+                </select>
+            </h1>
+            <span class="sub-info"><i class="fa fa-th-large" aria-hidden="true"></i> {{panelDescription}}</span>
+        </div>
+        <!--<div class="actions">
+            <button class="btn-action" (click)="openEditBranchModal()">Edit Branch</button>
+            <button class="btn-action"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+        </div>-->
+    </div>
+    <div class="panel-nav">
+        <ul>
+            <li>
+                <a>SUMMARY</a>
+            </li>
+            <!--<li>
+                <a>SALES</a>
+            </li>
+            <li>
+                <a>INVENTORY</a>
+            </li>-->
+        </ul>
+    </div>
+</section>
+<section class="panel-content panel-custom">
+    <!--sec-cont-->
+    <div class="container dashboard-container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-6 flex-direction">
+                <panel-loading [load]="loadingOverview" [text]="'Loading overview...'"></panel-loading>
+                <h4>OVERVIEW</h4>
+                <div class="widget-wrapper store widget-card" *ngIf="!loadingOverview">
+                    <div class="left left-shop-one">
+                        <div class="icon">
+                            <i class="fa fa-shopping-cart fa-2x" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                    <div class="center">
+                        <li class="display-total"><b>₱{{ totalSalesPerYear | number : '1.2-2'}}</b></li>
+                        <li class="total-details">TOTAL SALES THIS YEAR</li>
+                    </div>
+                </div>
+                <div class="widget-wrapper store widget-card" *ngIf="!loadingOverview">
+                    <div class="left left-shop-two">
+                        <div class="icon">
+                            <i class="fa fa-shopping-cart fa-2x" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                    <div class="center">
+                        <li class="display-total"><b>₱{{totalSalesPerMonth | number : '1.2-2'}}</b></li>
+                        <li class="total-details">TOTAL SALES THIS MONTH</li>
+                    </div>
+                </div>
+                <div class="widget-wrapper store widget-card" *ngIf="!loadingOverview">
+                    <div class="right right-user-one ">
+                        <div class="icon">
+                            <i class="fa fa-users fa-2x" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                    <div class="center">
+                        <li class="display-total"><b>{{ memberCountPerYear | number : '1.0-0'}}</b></li>
+                        <li class="total-details">TOTAL CUSTOMER (YEAR)</li>
+                    </div>
+                </div>
+                <div class="widget-wrapper store widget-card" *ngIf="!loadingOverview">
+                    <div class="right right-user-two ">
+                        <div class="icon">
+                            <i class="fa fa-users fa-2x" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                    <div class="center">
+                        <li class="display-total"><b>{{ memberCountPerMonth | number : '1.0-0'}}</b></li>
+                        <!-- <li class="total-details">TOTAL CUSTOMER (MONTH)</li> -->
+                        <li class="total-details">TOTAL CUSTOMER (MONTH)</li>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <panel-loading [load]="loadingDailySales" [text]="'Loading daily sales...'"></panel-loading>
+                <p *ngIf="!loadingDailySales&&productsSalesSummary.length<=0">No sales available.</p>
+                <div class="bar-graph" *ngIf="!loadingDailySales&&productsSalesSummary.length>0">
+                    <div class="bar-label">
+                        <ul>
+                            <li *ngFor="let i of graphIntervals;">{{i}}</li>
+                        </ul>
+                    </div>
+                    <div class="bars">
+                        <div class="bars-wrapper" [style.width.px]="productsSalesSummary.length*360">
+                            <div *ngFor="let item of productsSalesSummary; let i = index;" class="bar" placement="top"
+                                 triggers="mouseenter:mouseleave" container="body" [ngbPopover]="popoverContent">
+                                <ng-template #popoverContent>
+                                    <span>{{item.date | date}}</span>
+                                    <br>
+                                    <span>{{item.weekday_string}}</span>
+                                    <br>
+                                    <b>P{{item.net_sales | number : '1.2-2'}}</b>
+                                    <i>Total Sales</i>
+                                    <br>
+                                    <b>P{{item.returns | number :'1.2-2'}}</b>
+                                    <i>Returns</i>
+                                </ng-template>
+                                <span class="label">{{item.product_name}}</span>
+                                <div class="cost" [style.height.%]="getGraphSalesPercentage(item.returns)"></div>
+                                <div class="profit" [style.height.%]="getGraphSalesPercentage(item.net_sales)"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="panel-content panel-custom">
+    <div class="container dashboard-container">
+        <div class="row">
+            <div class="col-xs-12 col-sm-5">
+                <panel-loading [load]="loadingFeed" [text]="'Loading feeds...'"></panel-loading>
+                <div class="table-response">
+                    <table class="table table-striped">
+                        <thead class="thead">
+                        <tr>
+                            <th>
+                                <h4>TRANSACTION FEED</h4></th>
+                            <th>
+                                <div class="pull-right">
+                                    <!-- Original -->
+                                    <!--<div class="btn-group">-->
+                                    <!--<button type="button" class="btn btn-xs">SORT BY &nbsp;-->
+                                    <!--<i class="fa fa-angle-down " aria-hidden="true"></i>-->
+                                    <!---->
+                                    <!--</button>-->
+                                    <!--</div>-->
+                                    <!-- ORDER BY -->
+                                    <div class="btn-group">
+                                        <select name="order-by" class="custom-select" style="margin-bottom: 0;"
+                                                (ngModelChange)="reorderTransactions($event)"
+                                                [(ngModel)]="transactionOrder">
+                                            <option selected disabled>ORDER BY</option>
+                                            <option *ngFor="let order of orderList" [value]="order.value">
+                                                {{order.label}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="tbl-feed" style="margin-top:-17px;background:#ffffff;">
+                    <div class="trans-feed" *ngIf="!loadingFeed">
+                        <table class="table activity">
+                            <tbody>
+                            <tr *ngFor="let activity of activityList">
+                                <th *ngIf="activity.activity_log_type_code != 'void_sale'">{{activity.transaction_type_name}}</th>
+                                <th *ngIf="activity.activity_log_type_code == 'void_sale'">Void {{activity.transaction_type_name}}</th>
+                                <td>
+                                    <p>Order Number {{ activity.order_number }} by {{ activity.customer_firstname }}
+                                        {{activity.customer_lastname }} in {{ activity.branch_name }}.
+                                        <br> Transaction made by {{ activity.user_firstname }} {{ activity.user_lastname
+                                        }}
+                                    </p>
+                                </td>
+                                <td>
+                                    <p><i>
+                                        {{ activity.date | date: 'fullDate' }} {{ activity.date | date: 'shortTime' }}
+                                    </i></p>
+                                </td>
+                                <!-- Must display this message -->
+                                <!--<td>-->
+                                <!--<p>Order Number #126547289 by Customer Name in Limketkai Center Branch.<br>-->
+                                <!--Transaction made by Staff Name</p>-->
+                                <!--</td>-->
+                                <!--<td><p><i>11:20 AM, Today</i></p></td>-->
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-7">
+                <panel-loading [load]="loadingAlerts" [text]="'Loading alerts...'"></panel-loading>
+                <div *ngIf="!loadingAlerts">
+                    <h4>INVENTORY ALERT</h4>
+                    <p *ngIf="alerts.length<=0">No items found.</p>
+                    <div class="inventory-alert">
+                        <div class="alert alert-default" *ngFor="let alert of alerts; let i = index;"
+                             [class.alert-warn]="alert.inventory_status_code=='low_inventory'">
+                            <li><strong [class.text-warn]="alert.inventory_status_code=='low_inventory'">{{alert.inventory_status}}</strong>
+                            </li>
+                            <li>{{alert.product_name}} ({{alert.size | number}} {{alert.metrics}})</li>
+                            <li class="branch"><b>{{alert.branch_name}}</b></li>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

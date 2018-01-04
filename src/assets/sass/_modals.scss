@@ -1,0 +1,152 @@
+.modal {
+
+  &.bordered {
+
+    .modal-content {
+      border: 1px solid #929292 !important;
+    }
+
+  }
+
+  .modal-content {
+
+    border: none !important;
+
+    .modal-header {
+      background: #D8E2EB;
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+
+      .modal-title {
+        display: block;
+        font-size: 20px;
+        margin-top: 10px;
+        margin-bottom: -5px;
+        font-weight: 600;
+      }
+      &.my-header{
+        background-color: #cedfe9;
+      }
+    }
+
+    .modal-body {
+
+      h2 {
+        font-size: 15px;
+        font-weight: bold;
+        color: #2aa8b2;
+        margin-top: 28px;
+      }
+
+      .image-box {
+
+        border: 1px solid #cccccc;
+        background-color: #fbfbfb;
+        padding: 6px;
+
+        img {
+
+          &.add-product-img {
+            height: 150px;
+          }
+
+        }
+
+      }
+    }
+
+    .modal-footer {
+      background: #2AA8B2;
+      border-bottom-left-radius: 5px;
+      border-bottom-right-radius: 5px;
+
+      .btn-primary {
+        color: #ffffff;
+        border: 1px solid #fff;
+        padding: .45rem .75rem;
+        background: transparent;
+      }
+
+    }
+
+    form {
+
+      select {
+        &.inline-input {
+          padding: 5px;
+          border: 1px solid #d8e2eb;
+          background: #ffffff;
+        }
+      }
+
+      input {
+        width: 100%;
+        border: none;
+        border-bottom: 1px solid #d8e2eb;
+        margin-bottom: 15px;
+
+        &.form-control-important {
+          border: 1px solid rgba(0, 0, 0, .15) !important;
+        }
+
+        &.inline-input {
+          width: auto;
+          border: 1px solid #d8e2eb;
+          margin: 0;
+          padding: 5px;
+
+          &.number {
+            width: 84px;
+          }
+
+        }
+
+      }
+
+      label {
+        font-size: 14px;
+        color: #8392A0;
+        letter-spacing: 0;
+        width: 100%;
+        margin: 0;
+
+        &.inline-label {
+          width: auto !important;
+        }
+
+        span.important {
+          color: red;
+        }
+
+      }
+
+    }
+
+    .left {
+      width: 50%;
+    }
+
+    .btn-secondary {
+      background: #31676b;
+      border: none;
+    }
+
+  }
+  //.modal-lg{
+  //  table{
+  //    .inline-input{
+  //      width:140px !important;
+  //    }
+  //  }
+  //}
+  @media (min-width: 576px){
+    .modal-dialog{
+      &.modal-xl{
+        max-width: 1240px;
+      }
+     
+  }
+}
+  
+
+}

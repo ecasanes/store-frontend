@@ -1,0 +1,24 @@
+a {
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: none;
+
+  }
+
+  .add-entry {
+    float: right;
+    font-size: 13px;
+    text-transform: uppercase;
+    color: #31676b;
+    font-weight: bold;
+    margin: 11px 13px;
+  }
+
+  .link {
+    &.link-normal{
+      color:#007bff !important;
+    }
+  }
+
+}

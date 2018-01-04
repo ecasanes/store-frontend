@@ -1,0 +1,114 @@
+ .modal-header.mod-head {
+    background: #575d6d;
+    padding-top: 2cm;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    padding: 50px 40px 20px 40px;
+}
+.modal-header h1{
+    font-weight: 700;
+}
+.modal-header p{
+    color: #ffffff;
+    font-weight: 100;
+}
+
+.mode-details h3{
+    /* padding-left: 5px; */
+    color: #5e5e5e;
+    font-size: 15px;
+    font-weight: 800;
+}
+.mode-details h3{
+   margin-right: 37px;
+}
+
+h1{
+    color: #ffffff;
+    font-size: 20px;
+    font: bolder;
+}
+.right-id h1{
+    margin-top: 22px;
+}
+.modal-body {
+    position: relative;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 40px;
+}
+
+.table-striped>tbody>tr:nth-child(even)>td, 
+.table-striped>tbody>tr:nth-child(even)>th {
+   background-color: #edf2f6;
+ }
+
+.table tr td{
+    color: #a7a7a7;
+    font-weight: 300;
+    background-color: #ffffff;
+}
+
+table td, .table th {
+    padding: .65rem;
+    vertical-align: top;
+    border-top: 1px solid #ffffff;
+}
+table.table thead th {
+    color: #a2a2a2;
+    font-size: 12px;
+    font-weight: 700;
+}
+.table th{
+    border-top: none;
+    border-bottom: solid 1px #bcbcbc;
+    padding-bottom: .2em;
+    padding-left: .1em;
+}
+.table tr.border_bottom td {
+    color: #d51b32;
+    font-weight: 600;
+}
+.table tr.border_bottom i {
+    color: #a7a7a7;
+    font-weight: 500;
+    font-size: 12px;
+}
+tr.border_bottom td {
+    border-bottom:1pt solid #bcbcbc;
+  }
+/* tbody {
+    margin-top: 120px;
+    border-bottom: 1px solid;
+} */
+ p{
+    color: #a7a7a7;
+    font-size: 12px;
+    letter-spacing: 0;
+    margin-bottom: 0;
+}
+.text-justify td{
+    /* padding: 18px; */
+    padding-left: 0;
+    padding-right: 50px;
+} 
+.text-justify{
+    color: #49a7b2;
+}
+.text-justify h4{
+    font-size: 18px;
+    font-weight: 600;
+} 
+.text-justify h3{
+    font-weight: 700;
+    font-size: 26px;
+}
+.text-justify h5{
+    color: #d0021b;
+    font-weight: 800;
+    font-size: 18px;
+}
+/* .tr-style td{
+    background-color: #edf2f6;
+    color: #aaaaab;
+} */

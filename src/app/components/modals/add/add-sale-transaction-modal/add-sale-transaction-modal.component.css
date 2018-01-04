@@ -1,0 +1,15 @@
+.totals{
+    clear: both;
+    margin-top: 60px;
+    padding: 20px 30px;
+    background: #e2e2e2;
+    display: block;
+    border-radius: 4px;
+}
+
+.remove-item{
+    display: block;
+    margin-top: 5px;
+    font-size: 19px;
+    font-weight: normal;
+}

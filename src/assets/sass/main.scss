@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:300,400,700,900');
+@import '_variables';
+@import '_body';
+@import '_anchor-tags';
+@import '_login';
+@import '_general-classes';
+@import '_sidebar';
+@import '_icons';
+@import '_panels.scss';
+@import '_general-tags.scss';
+@import '_buttons.scss';
+@import '_modals.scss';
+@import '_tables.scss';
+@import '_forms.scss';
+@import '_bootstrap-classes.scss';
+@import "~ngx-toastr/toastr";
+
+* {
+  outline: none;
+}
+
+/*
+NOTE: you can create new sass file with underscore (e.g. _deliveries.scss)
+AND import it above without the .scss extension
+*/
