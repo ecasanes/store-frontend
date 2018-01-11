@@ -5,6 +5,8 @@ import {Router} from "@angular/router";
 import {AuthService} from "../../../shared";
 import {ErrorResponseService} from "../../../shared/services/helpers/error-response.service";
 import {ErrorResponse} from "../../../classes/error-response.class";
+import {ModalService} from "../../../shared/services/helpers/modal.service";
+import {AddBuyerModalComponent} from "../../modals/add/add-buyer-modal/add-buyer-modal.component";
 
 declare var $: any;
 
@@ -22,7 +24,8 @@ export class SigninComponent implements OnInit {
 
     constructor(private router: Router,
                 private authService: AuthService,
-                private errorResponseService: ErrorResponseService) {
+                private errorResponseService: ErrorResponseService,
+                private modalService: ModalService) {
     }
 
     ngOnInit() {
@@ -52,7 +55,7 @@ export class SigninComponent implements OnInit {
                 tokenData => {
 
                     this.signingIn = false;
-                    this.router.navigate(['/'])
+                    this.router.navigate(['/profile'])
                         .then(function () {
                             console.log('token data: ', tokenData)
                         })
@@ -66,6 +69,26 @@ export class SigninComponent implements OnInit {
                     this.errorResponse = this.errorResponseService.handleError(error);
                 }
             )
+    }
+
+    onRegister() {
+
+        const modalConfig = {
+            size: 'lg'
+        };
+
+        const modalRef = this.modalService.open(AddBuyerModalComponent, null, true);
+
+        modalRef.result
+            .then(
+                (results) => {
+                    console.log('modal dismissed');
+                }
+            )
+            .catch(
+                (error) => console.log('error', error)
+            )
+
     }
 
 }

@@ -1,0 +1,35 @@
+<div class="modal-header">
+  <div class="modal-headline">
+    <h4 class="modal-title">Login</h4>
+    <span class="instruction">Please login to manage cart</span>
+  </div>
+</div>
+<div class="modal-body">
+
+  <form class="login-form" #f="ngForm">
+
+    <alert-error-handler [errorResponse]="errorResponse"></alert-error-handler>
+    <span id="success"></span>
+
+    <div class="form-group">
+      <label for="email">Email</label>
+      <input type="email" name="email" placeholder="Email Address" id="email" ngModel required>
+      <error-handler [errors]="errorResponse.errors" [validate]="'email'"></error-handler>
+    </div>
+
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input type="password" name="password" placeholder="Password" id="password" ngModel required>
+      <error-handler [errors]="errorResponse.errors" [validate]="'password'"></error-handler>
+    </div>
+
+  </form>
+
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-danger" (click)="activeModal.dismiss()">Close</button>
+  <button type="button" class="btn btn-primary" [disabled]="!f.valid||loggingIn" (click)="onLogin(f)">
+    <span *ngIf="!loggingIn">Login</span>
+    <button-loading [load]="loggingIn" text="Logging In"></button-loading>
+  </button>
+</div>

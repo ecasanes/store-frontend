@@ -30,6 +30,15 @@ export class HttpService {
         });
     }
 
+    public getPublic(path: string, options?: RequestOptionsArgs): Observable<Response> {
+
+        const requestUrl = this.getRequestUrl(path);
+        const requestOptions = this.getOptions(options);
+
+        return this.http.get(requestUrl, requestOptions)
+
+    }
+
     public getFromModal(path: string, options?: RequestOptionsArgs): Observable<Response> {
         return this.authService.authenticateFromModal().flatMap(authenticated => {
             if (authenticated) {
@@ -60,6 +69,18 @@ export class HttpService {
                 return Observable.throw('Unable to re-authenticate');
             }
         });
+    }
+
+    public postPublic(path: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
+
+
+        const requestUrl = this.getRequestUrl(path);
+        const requestOptions = this.getOptions(options);
+
+        console.log('POST - body: ', body);
+
+        return this.http.post(requestUrl, body, requestOptions);
+
     }
 
     public put(path: string, body: any, options?: RequestOptionsArgs): Observable<Response> {
@@ -111,12 +132,12 @@ export class HttpService {
         });
     }
 
-    public getRequestUrl(path:string, hasToken:boolean = false) {
+    public getRequestUrl(path: string, hasToken: boolean = false) {
 
         const tokenString = this.getTokenString();
         let requestUrl = this.baseUrl + path + tokenString;
 
-        if(!hasToken){
+        if (!hasToken) {
             requestUrl = this.baseUrl + path;
         }
 
@@ -143,7 +164,7 @@ export class HttpService {
             //'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8; multipart/form-data',
             //'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8; multipart/form-data',
             'Authorization': 'Bearer ' + this.authService.getToken(),
-            'Accept':'application/json'
+            'Accept': 'application/json'
         });
     }
 
@@ -154,7 +175,7 @@ export class HttpService {
             return options;
         }
 
-        if(typeof options.headers === 'undefined'){
+        if (typeof options.headers === 'undefined') {
             options.headers = this.getDefaultHeaders();
         }
 
@@ -168,7 +189,7 @@ export class HttpService {
             return options;
         }
 
-        if(typeof options.headers === 'undefined'){
+        if (typeof options.headers === 'undefined') {
             options.headers = this.getUploadHeaders();
         }
 

@@ -1,15 +1,12 @@
 import {Component, OnDestroy, OnInit} from "@angular/core";
 import {Response} from "@angular/http";
-import {ActivatedRoute, Router} from "@angular/router";
+import {Router} from "@angular/router";
 
 import {
     AlertService,
     AuthService,
-    CategoryService,
     DashboardEventService,
-    ModalService,
-    ProductService,
-    SearchService
+    ProductService
 } from "../../../shared";
 
 import {
@@ -17,19 +14,10 @@ import {
     ProductCategory
 } from '../../../classes';
 
-import {
-    AddCategoryModalComponent,
-    AddProductModalComponent,
-    EditProductModalComponent,
-    RestockProductModalComponent,
-    ReturnStockProductModalComponent,
-    ExportProductsModalComponent
-} from '../../modals';
-
 @Component({
     selector: 'app-products',
     templateUrl: './products.component.html',
-    styleUrls: ['./products.component.css']
+    styleUrls: ['./products.component.scss']
 })
 
 export class ProductsComponent implements OnInit, OnDestroy {
@@ -43,12 +31,9 @@ export class ProductsComponent implements OnInit, OnDestroy {
     productsCurrentPage: number = 1;
 
     panelTitle: string = "Products";
-    panelDescription: string = "List of all Products";
 
+    userId: number = null;
     categoryId: number = null;
-
-    private routeSubscription: any;
-    private searchSubscription: any;
 
     query: string = "";
 
@@ -56,51 +41,17 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
     constructor(public router: Router,
                 private authService: AuthService,
-                private activeRoute: ActivatedRoute,
                 private productService: ProductService,
-                private modalService: ModalService,
-                private categoryService: CategoryService,
                 private dashboardEventService: DashboardEventService,
-                private searchService: SearchService,
                 private alertService: AlertService) {
-
+        this.userId = this.authService.getUserId();
     }
 
     ngOnInit() {
-
-        this.searchService.isOn.emit(true);
-
-        this.routeSubscription = this.activeRoute.params.subscribe(params => {
-
-            // TODO: refactor into a reusable function
-
-            const isLoggedIn = this.authService.isLoggedIn();
-
-            if (!isLoggedIn) {
-                this.authService.showModal.emit(true);
-            }
-
-            if (isLoggedIn) {
-                console.log('route changed');
-                this.categoryId = +params['category_id'];
-                this.getCategories();
-                this.getProducts();
-            }
-
-        });
-
-        this.searchSubscription = this.searchService.query.subscribe(
-            (query) => {
-                this.query = query;
-                this.getProducts();
-            },
-            (error) => console.log('query error: ', error)
-        )
+        this.getProducts();
     }
 
     ngOnDestroy() {
-        this.routeSubscription.unsubscribe();
-        this.searchSubscription.unsubscribe();
     }
 
     getProducts() {
@@ -110,8 +61,9 @@ export class ProductsComponent implements OnInit, OnDestroy {
         const currentPage = this.productsCurrentPage;
         const categoryId = this.categoryId;
         const query = this.query;
+        const userId = this.userId;
 
-        this.productService.getProducts(currentPage, categoryId, query)
+        this.productService.getProducts(currentPage, categoryId, query, 'none', userId)
             .subscribe(
                 (response) => {
                     this.products = response.data;
@@ -127,185 +79,109 @@ export class ProductsComponent implements OnInit, OnDestroy {
             )
     }
 
-    onProductDeleted(id: number) {
+    onAddToCart(product: Product) {
 
-        console.log('deleted product variation id number: ', id);
+        if (product.total_branch_quantity <= 0) {
+            this.noStocksLeft(product);
+            return;
+        }
 
-        const position = this.products.findIndex(
-            (product: Product) => {
-                return product.id == id;
+        this.alertService.input("Input Quantity").then(
+            (quantity:number) => {
+
+                if(quantity>product.total_branch_quantity){
+                    this.notEnoughStocks(product);
+                    return;
+                }
+
+                product.quantity = quantity;
+                this.addToCart(product);
             }
         );
 
-        console.log('position of item to be deleted: ', position);
 
-        this.products.splice(position, 1);
     }
 
-    onEdit(product: Product) {
-        this.openEditProductModal(product);
+    addToCart(product: Product) {
+
+        this.productService.addToCart(this.userId, product.product_variation_id, product.quantity)
+            .subscribe(
+                (response) => {
+                    product.in_cart = 1;
+                    this.dashboardEventService.onCartChange.emit(true);
+                },
+                (error) => {
+                    console.log('something went wrong while adding to wishlist', error);
+                }
+            )
+
     }
 
-    onDelete(productVariationId: number) {
+    noStocksLeft(product: Product) {
 
-        this.alertService.confirmDelete()
+        this.alertService.confirmDelete("Cannot Add to Cart", "Add to wishlist instead?", "Yes, add to wishlist")
             .then(() => {
-                this.deleteProduct(productVariationId);
+                this.onAddToWishList(product);
             })
             .catch(() => {
             });
 
     }
 
-    onRestock(product: Product) {
-        this.openRestockProductModal(product);
-    }
+    notEnoughStocks(product: Product) {
 
-    onReturnStock(product: Product) {
-        this.openReturnStockProductModal(product);
-    }
-
-    deleteProduct(id: number) {
-
-        this.productService.deleteProduct(id)
-            .subscribe(
-                (data) => {
-                    this.onProductDeleted(id);
-                    this.alertService.notifySuccess("Product successfully deleted");
-                },
-                (error: Response) =>
-                    console.log(error)
-            )
-    }
-
-    selectPage(page: number) {
-        this.productsCurrentPage = page;
-        this.getProducts();
-    }
-
-    openAddProductModal() {
-
-        const modalRef = this.modalService.open(AddProductModalComponent, {
-            size: 'lg'
-        });
-
-        //modalRef.componentInstance.name = 'World';
-        modalRef.result
-            .then(
-                (results) => {
-                    console.log('closed modal success: ', results);
-                    this.getProducts();
-                }
-            )
-            .catch(
-                (error) => console.log('error', error)
-            )
-    }
-
-    openAddCategoryModal() {
-
-        const modalRef = this.modalService.open(AddCategoryModalComponent);
-
-        //modalRef.componentInstance.name = 'World';
-        modalRef.result
-            .then(
-                (results) => {
-                    console.log('closed modal success: ', results);
-                    this.getCategories();
-                }
-            )
-            .catch(
-                (error) => console.log('error', error)
-            )
-    }
-
-    openEditProductModal(product: Product) {
-
-        console.log('edited product: ', product);
-
-        const modalRef = this.modalService.open(EditProductModalComponent);
-
-        modalRef.componentInstance.product = product;
-        modalRef.result
-            .then(
-                (results) => {
-                    console.log('closed modal success: ', results);
-                    this.getProducts();
-                }
-            )
-            .catch(
-                (error) => console.log('error', error)
-            )
+        this.alertService.confirmSuccess("Cannot Add to Cart", "Not enough stocks for "+product.name, "Ok")
+            .then(() => {
+            })
+            .catch(() => {
+            });
 
     }
 
-    openRestockProductModal(product: Product) {
+    onRemoveInCart(product: Product) {
 
-        const modalRef = this.modalService.open(RestockProductModalComponent);
-
-        modalRef.componentInstance.product = product;
-        modalRef.result
-            .then(
-                (results) => {
-                    console.log('closed modal success: ', results);
-                    this.getProducts();
-                }
-            )
-            .catch(
-                (error) => console.log('error', error)
-            )
-    }
-
-    openReturnStockProductModal(product: Product) {
-
-        const modalRef = this.modalService.open(ReturnStockProductModalComponent);
-
-        modalRef.componentInstance.product = product;
-        modalRef.result
-            .then(
-                (results) => {
-                    console.log('closed modal success: ', results);
-                    this.getProducts();
-                }
-            )
-            .catch(
-                (error) => console.log('error', error)
-            )
-    }
-
-    getCategories() {
-
-        this.categoryService.getCategories()
+        this.productService.removeInCart(this.userId, product.product_variation_id)
             .subscribe(
                 (response) => {
-                    this.categories = response.data;
-                    this.dashboardEventService.onGetCategories.emit(this.categories);
+                    product.in_cart = 0;
+                    this.dashboardEventService.onCartChange.emit(true);
                 },
-                (error: Response) =>
-                    console.log(error)
-            )
-    }
-
-    openExportModal(products: Product[]) {
-
-        const modalRef = this.modalService.open(ExportProductsModalComponent, {
-            keyboard: false,
-            windowClass: 'fade',
-            backdrop: 'static',
-        });
-
-        modalRef.componentInstance.products = products;
-
-        modalRef.result
-            .then(
-                (results) => {
-                    console.log('closed modal success: ', results);
-                    this.getProducts();
+                (error) => {
+                    console.log('something went wrong while adding to wishlist', error);
                 }
             )
-            .catch(
-                (error) => console.log('error', error)
+
+    }
+
+    onAddToWishList(product: Product) {
+
+        console.log('user id: ', this.userId);
+        console.log('prod id: ', product.product_variation_id);
+
+        this.productService.addToWishlist(this.userId, product.product_variation_id)
+            .subscribe(
+                (response) => {
+                    product.in_wishlist = 1;
+                },
+                (error) => {
+                    console.log('something went wrong while adding to wishlist', error);
+                }
             )
+
+    }
+
+    onRemoveInWishList(product: Product) {
+
+        this.productService.removeInWishlist(this.userId, product.product_variation_id)
+            .subscribe(
+                (response) => {
+                    product.in_wishlist = 0;
+                },
+                (error) => {
+                    console.log('something went wrong while adding to wishlist', error);
+                }
+            )
+
     }
 
 }

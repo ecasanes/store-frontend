@@ -10,22 +10,12 @@ export class DashboardGuard implements CanActivate {
 
     canActivate() {
 
-        const hasCompanyPrivileges = this.authService.validateCompanyPrivileges();
-        const hasCompanyStaffInventoryPrivileges = this.authService.validateCompanyStaffPrivileges(Constants.getInventoryPermission);
-        const hasCompanyStaffSalesPrivileges = this.authService.validateCompanyStaffPrivileges(Constants.getSalesPermission);
+        const isAdmin = this.authService.validateAdminPrivileges();
+        const isSeller = this.authService.validateSellerPrivileges();
+        const isBuyer = this.authService.validateBuyerPrivileges();
 
-        if(!hasCompanyPrivileges && !hasCompanyStaffInventoryPrivileges && !hasCompanyStaffSalesPrivileges){
+        if(!isAdmin && !isSeller && !isBuyer){
             this.redirectToSignin();
-            return false;
-        }
-
-        if(!hasCompanyPrivileges && hasCompanyStaffInventoryPrivileges){
-            this.redirectToInventory();
-            return false;
-        }
-
-        if(!hasCompanyPrivileges && hasCompanyStaffInventoryPrivileges){
-            this.redirectToSales();
             return false;
         }
 

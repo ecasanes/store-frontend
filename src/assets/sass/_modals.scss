@@ -13,9 +13,8 @@
     border: none !important;
 
     .modal-header {
-      background: #D8E2EB;
-      border-top-left-radius: 5px;
-      border-top-right-radius: 5px;
+      background: #01446f;
+      color: #ffffff;
 
       .modal-title {
         display: block;
@@ -30,6 +29,8 @@
     }
 
     .modal-body {
+
+      padding:15px 30px;
 
       h2 {
         font-size: 15px;
@@ -56,16 +57,8 @@
     }
 
     .modal-footer {
-      background: #2AA8B2;
-      border-bottom-left-radius: 5px;
-      border-bottom-right-radius: 5px;
-
-      .btn-primary {
-        color: #ffffff;
-        border: 1px solid #fff;
-        padding: .45rem .75rem;
-        background: transparent;
-      }
+      background: #01446f;
+      color: #ffffff;
 
     }
 
@@ -81,9 +74,8 @@
 
       input {
         width: 100%;
-        border: none;
-        border-bottom: 1px solid #d8e2eb;
-        margin-bottom: 15px;
+        border: 1px solid #cccccc;
+        padding:5px;
 
         &.form-control-important {
           border: 1px solid rgba(0, 0, 0, .15) !important;
@@ -105,7 +97,7 @@
 
       label {
         font-size: 14px;
-        color: #8392A0;
+        color: #333333;
         letter-spacing: 0;
         width: 100%;
         margin: 0;
@@ -124,11 +116,6 @@
 
     .left {
       width: 50%;
-    }
-
-    .btn-secondary {
-      background: #31676b;
-      border: none;
     }
 
   }

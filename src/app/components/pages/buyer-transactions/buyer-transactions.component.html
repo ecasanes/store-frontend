@@ -1,0 +1,54 @@
+<panel-title title="Order History"></panel-title>
+
+<section class="panel-header">
+  <div class="panel-details">
+    <div class="details">
+      <ul class="order-status-nav">
+        <li *ngFor="let type of orderHistoryStatusList" [class.selected]="currentBuyerStatus==type.code">
+          <a (click)="onGetTransactionsByCode(type)">{{type.name}}</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="panel-content">
+
+  <div class="container animated fadeIn">
+
+    <p *ngIf="orders.length<=0&&!loadingOrders">No orders.</p>
+    <p *ngIf="loadingOrders">Loading...</p>
+
+    <table class="table table-responsive" *ngIf="orders.length>0">
+      <thead>
+      <tr>
+        <th>ID #</th>
+        <th *ngIf="currentBuyerStatus=='shipped'">TRACKING #</th>
+        <th>ITEMS</th>
+        <th>TOTAL</th>
+        <th>DATE</th>
+        <th>BUYER</th>
+        <th>SELLER</th>
+        <th *ngIf="hasAction">ACTION</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let order of orders">
+        <td><strong>#{{order.id}}</strong></td>
+        <td *ngIf="currentBuyerStatus=='shipped'"><strong>#{{order.tracking_no}}</strong></td>
+        <td>{{order.items_string}}</td>
+        <td>{{order.total}}</td>
+        <td>{{order.created_at | date}}</td>
+        <td>{{order.buyer_name}}</td>
+        <td>{{order.seller_name}}</td>
+        <td class="actions" *ngIf="hasAction">
+          <button class="btn btn-success btn-sm order-btn" *ngIf="currentBuyerStatus=='to_be_completed'" (click)="onComplete(order)">
+            <i class="fa fa-check"></i>
+            Complete Order
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

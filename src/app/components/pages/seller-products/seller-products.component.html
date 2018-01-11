@@ -1,0 +1,47 @@
+<panel-title title="My Products"></panel-title>
+<section class="panel-content">
+
+    <div class="container animated fadeIn">
+
+        <button (click)="onCreate()" class="btn btn-success pull-right">
+            <i class="fa fa-plus"></i>
+            Create New Product
+        </button>
+
+        <button style="margin-right:10px;" (click)="onAddStock()" class="btn btn-success pull-right">
+            <i class="fa fa-plus"></i>
+            Add Stock
+        </button>
+
+        <br/>
+        <br/>
+
+        <table class="table table-responsive">
+            <thead>
+            <tr>
+                <th>NAME</th>
+                <th>QUANTITY</th>
+                <th>CATEGORY</th>
+                <th>CONDITION</th>
+                <th>PRICE</th>
+                <th>SHIPPING FEE</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let product of products">
+                <td>{{product.name}}</td>
+                <td>{{product.branch_quantity | number}}</td>
+                <td>{{product.category}}</td>
+                <td>{{product.condition}}</td>
+                <td>{{product.selling_price}}</td>
+                <td>{{product.shipping_price}}</td>
+                <td class="actions">
+                    <a (click)="onEdit(product)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                    <a (click)="onDelete(product.id)"><i class="fa fa-trash" aria-hidden="true"></i></a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>

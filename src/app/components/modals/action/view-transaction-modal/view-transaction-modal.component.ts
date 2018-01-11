@@ -16,9 +16,9 @@ import {Constants} from "../../../../shared/constants";
     templateUrl: './view-transaction-modal.component.html',
     styleUrls: ['./view-transaction-modal.component.css']
 })
-export class ViewTransactionModalComponent implements OnInit {
+export class ViewTransactionModalComponent {
 
-    @Input() orNo: string;
+    /*@Input() orNo: string;
     @Input() branchId: number;
 
     currentTransaction: Transaction = new Transaction();
@@ -96,6 +96,6 @@ export class ViewTransactionModalComponent implements OnInit {
 
         console.log('current transaction: ', this.currentTransaction);
 
-    }
+    }*/
 
 }

@@ -1,0 +1,31 @@
+<panel-title title="My Wishlist"></panel-title>
+
+<section class="panel-content">
+
+  <div class="container animated fadeIn">
+
+    <div class="card product-card animated fadeIn" *ngFor="let product of products | filter:'in_wishlist':1">
+      <!--<img class="card-img-top" src="..." alt="Card image cap">-->
+      <div class="card-block" >
+        <h4 class="card-title">{{product.name}}</h4>
+        <p class="card-text">
+          {{product.description}}
+        </p>
+
+        <div class="price-details">
+          <p>Stocks Left: <span class="price" [class.text-danger]="product.total_branch_quantity<=0">{{product.total_branch_quantity | number}}</span></p>
+          <p>Price: Php <span class="price">{{product.selling_price | number : '2.2-2'}}</span></p>
+          <p>Shipping Fee: Php <span class="price">{{product.shipping_price | number: '2.2-2'}}</span></p>
+        </div>
+
+
+        <a id="close-button" *ngIf="product.in_wishlist==1" class="action-button text-danger" (click)="onRemoveInWishList(product)">
+          <i class="fa fa-close"></i>
+        </a>
+
+      </div>
+    </div>
+
+  </div>
+
+</section>

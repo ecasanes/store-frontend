@@ -3,11 +3,7 @@ import {NgbActiveModal, NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 import {AuthService} from "./shared";
 import {ConfirmLoginModalComponent} from "./components";
-import {PusherService} from "./shared/services/helpers/pusher.service";
 import {Router} from "@angular/router";
-
-declare var $: any;
-declare var Pusher: any;
 
 @Component({
     selector: 'app-root',
@@ -17,26 +13,24 @@ declare var Pusher: any;
 export class AppComponent {
 
     error: string = "";
-    //showLoginConfirmModal: boolean = false;
-
-    //private modal: any;
 
     confirmLoginModalShown: boolean = false;
 
     constructor(
         private authService: AuthService,
         private modalService: NgbModal,
-        private pusherService: PusherService,
         public activeModal: NgbActiveModal,
         public router: Router
     ) {
 
         this.checkSession();
-        this.pusherService.init(Pusher);
 
     }
 
     checkSession() {
+
+        console.log('checking session ...');
+
         this.authService.showModal.subscribe(
             needsAuth => {
                 if (needsAuth) {

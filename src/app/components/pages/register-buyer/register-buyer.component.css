@@ -1,0 +1,90 @@
+
+.container {
+    display: inline-flex;
+    flex-wrap: wrap;
+    margin-top: 8%;
+    margin-left: 50px;
+    justify-content: center;
+
+    /* border:1px solid black; */
+}
+.flex-direction{
+    flex-direction:row;
+}
+.content-one{
+    background-image: url('/assets/background.png');
+    background-size: cover;
+    width: 310px;
+    height: 360px;
+    color: #ffffff;
+    background-color: #354053 ;
+    background-position-y: 60px;
+    background-repeat: no-repeat;
+    border-radius: 20px 0 0 20px;
+    -webkit-box-shadow: 3px 3px 5px 6px #ccc;  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
+    -moz-box-shadow:    3px 3px 5px 6px #ccc;  /* Firefox 3.5 - 3.6 */
+    box-shadow:         3px 6px 6px 1px #ccc;  /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
+}
+
+.content-two{
+    background-color: #ffffff;
+    width: 540px;
+    height: 300px;
+    border: 1px solid #ccc;
+}
+
+.icon {
+    margin-top: 50px;
+    text-align: center;
+}
+
+.icon h3 {
+    margin-top: 12px;
+    color: #c7cacf;
+    font-size: 20px;
+}
+
+.icon h4 {
+    color: #14a0fb;
+    font-size: 16px;
+}
+
+@media screen and (max-width: 800px) {
+    .flex-direction {
+        flex-direction: column;
+    }
+    .content-one{
+        width: 560px;
+        height: 300px;
+        border-right:none;
+        border-radius: 20px 20px 0 0;
+        /* border-bottom:1px solid black; */
+    }
+    .content-two{
+        width: 560px;
+        height: 300px;
+        border-radius: 0;
+    }
+}
+
+.form {
+    background-color: #C2BDBD;
+    height: 300px;
+    width: 600px;
+}
+
+.form-wrapper {
+    margin-left: 60px;
+    margin-top: 10px;
+
+}
+
+label b {
+    color: #696969;
+    font-size: 12px;
+}
+
+.register-link{
+    color:blue !important;
+}
+

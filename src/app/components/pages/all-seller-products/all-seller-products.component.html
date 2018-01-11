@@ -1,0 +1,36 @@
+<panel-title title="All Products"></panel-title>
+<section class="panel-content">
+
+  <div class="container animated fadeIn">
+
+    <table class="table table-responsive">
+      <thead>
+      <tr>
+        <th>NAME</th>
+        <th>QUANTITY</th>
+        <th>CATEGORY</th>
+        <th>CONDITION</th>
+        <th>PRICE</th>
+        <th>SHIPPING FEE</th>
+        <th>SELLER</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let product of products">
+        <td>{{product.name}}</td>
+        <td>{{product.branch_quantity | number}}</td>
+        <td>{{product.category}}</td>
+        <td>{{product.condition}}</td>
+        <td>{{product.selling_price}}</td>
+        <td>{{product.shipping_price}}</td>
+        <td>{{product.seller_firstname}} {{product.seller_lastname}}</td>
+        <td class="actions">
+          <a (click)="onView(product)"><i class="fa fa-eye" aria-hidden="true"></i></a>
+          <a (click)="onDelete(product.id)"><i class="fa fa-trash" aria-hidden="true"></i></a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

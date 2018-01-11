@@ -3,12 +3,14 @@ table {
   &.table {
 
     th {
-      font-size: 13px;
+      font-size: 14px;
+      border: 1px solid #e9ecef !important;
     }
 
     td {
 
-      font-size: 13px;
+      font-size: 14px;
+      border: 1px solid #e9ecef !important;
 
       &.actions {
 
@@ -18,8 +20,6 @@ table {
           margin-left: 1px;
           margin-right: 1px;
           padding: 3px 4px;
-          /* border: 1px solid #ccc; */
-          /* border-radius: 3px; */
 
           &:hover{
             i{

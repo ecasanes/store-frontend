@@ -3,7 +3,6 @@ import {Response} from "@angular/http";
 import "rxjs/Rx";
 
 import {HttpService} from "../helpers/http.service";
-import {ProductCategory} from '../../../classes';
 import {Observable} from "rxjs/Observable";
 
 @Injectable()
@@ -41,37 +40,4 @@ export class CategoryService {
 
     }
 
-    addCategory(category: ProductCategory) {
-
-        const body = JSON.stringify(category);
-
-        const requestUrl = this.basePath;
-
-        return this.httpService.post(requestUrl, body)
-            .map(
-                (response: Response) => response.json().data
-            );
-    }
-
-    updateCategory(category: ProductCategory) {
-
-        const body = JSON.stringify(category);
-
-        const requestUrl = this.basePath + '/' + category.id;
-
-        return this.httpService.put(requestUrl, body)
-            .map(
-                (response: Response) => response.json().data
-            )
-    }
-
-    deleteCategory(id: number) {
-
-        const requestUrl = this.basePath + '/' + id;
-
-        return this.httpService.destroy(requestUrl)
-            .map(
-                (response: Response) => response.json().data
-            );
-    }
 }

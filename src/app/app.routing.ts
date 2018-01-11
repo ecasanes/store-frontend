@@ -4,37 +4,38 @@ import {ModuleWithProviders} from "@angular/core";
 import {
     DashboardComponent,
     ProductsComponent,
-    CategoriesComponent,
     SigninComponent,
     DashboardIndexComponent,
-    DeliveriesComponent,
-    PricingComponent,
-    CustomersComponent,
-    ReportsComponent,
-    SalesComponent,
-    AdjustmentsComponent,
-    StaffComponent,
-    StoresComponent,
-    ManagersComponent,
-    PageNotFoundComponent,
-    ActivitiesComponent
+    PageNotFoundComponent
 
 } from "./components";
 
 import {
     AuthGuard,
-    CompanyGuard,
-    CompanyStaffInventoryGuard,
-    CompanyStaffSalesGuard
 } from "./shared";
 import {DashboardGuard} from "./shared/guards/dashboard.guard";
-import {StocksComponent} from "./components/pages/stocks/stocks.component";
-import {FranchiseesComponent} from "./components/pages/franchisees/franchisees.component";
+import {ProfileComponent} from "./components/pages/profile/profile.component";
+import {SellersComponent} from "./components/pages/sellers/sellers.component";
+import {SellerTransactionsComponent} from "./components/pages/seller-transactions/seller-transactions.component";
+import {SellerProductsComponent} from "./components/pages/seller-products/seller-products.component";
+import {BuyersComponent} from "./components/pages/buyers/buyers.component";
+import {BuyerTransactionsComponent} from "./components/pages/buyer-transactions/buyer-transactions.component";
+import {VouchersComponent} from "./components/pages/vouchers/vouchers.component";
+import {CartComponent} from "./components/pages/cart/cart.component";
+import {BuyerOrdersComponent} from "./components/pages/buyer-orders/buyer-orders.component";
+import {WishlistComponent} from "./components/pages/wishlist/wishlist.component";
+import {SellerOrdersComponent} from "./components/pages/seller-orders/seller-orders.component";
+import {AllSellerProductsComponent} from "./components/pages/all-seller-products/all-seller-products.component";
+import {CheckoutComponent} from "./components/pages/checkout/checkout.component";
+import {PublicProductsComponent} from "./components/pages/public-products/public-products.component";
+import {GuestGuard} from "./shared/guards/guest.guard";
+import {BuyerGuard} from "./shared/guards/buyer.guard";
 
 
 const APP_ROUTES: Routes = [
 
     {path: 'signin', component: SigninComponent},
+    {path: 'dashboard-products', component: PublicProductsComponent, canActivate: [GuestGuard]},
 
     // canActivate: [UserGuard]
 
@@ -44,25 +45,27 @@ const APP_ROUTES: Routes = [
         canActivate: [AuthGuard],
         children: [
             {path: '', component: DashboardIndexComponent, canActivate: [DashboardGuard]},
-            {path: 'pricing', component: PricingComponent, canActivate: [CompanyStaffInventoryGuard]},
-            {path: 'deliveries', component: DeliveriesComponent, canActivate: [CompanyStaffInventoryGuard]},
-            {path: 'customers', component: CustomersComponent, canActivate: [CompanyGuard]},
-            {path: 'reports', component: ReportsComponent, canActivate: [CompanyGuard]},
-            {path: 'sales', component: SalesComponent, canActivate: [CompanyStaffSalesGuard]},
-            {path: 'adjustments', component: AdjustmentsComponent, canActivate: [CompanyStaffSalesGuard]},
-            {path: 'staff', component: StaffComponent, canActivate: [CompanyGuard]},
-            {path: 'stores', component: StoresComponent, canActivate: [CompanyGuard]},
-            {path: 'managers', component: ManagersComponent, canActivate: [CompanyGuard]},
-            {path: 'franchisees', component: FranchiseesComponent, canActivate: [CompanyGuard]},
-            {path: 'products', component: ProductsComponent, canActivate: [CompanyStaffInventoryGuard]},
-            {path: 'categories', component: CategoriesComponent, canActivate: [CompanyStaffInventoryGuard]},
-            {path: 'activities', component: ActivitiesComponent, canActivate: [CompanyStaffInventoryGuard]},
-            {path: 'stocks', component: StocksComponent, canActivate: [CompanyStaffInventoryGuard]},
-            {path: 'products/categories/:category_id', component: ProductsComponent, canActivate: [CompanyStaffInventoryGuard]},
-            {path: 'stocks/branches/:branch_id', component: StocksComponent, canActivate: [CompanyStaffInventoryGuard]},
-            {path: 'customers/branch/:branch_id', component: CustomersComponent, canActivate: [CompanyStaffInventoryGuard]},
-            {path: 'activities/transaction/:transaction_activity_type_id', component: ActivitiesComponent, canActivate: [CompanyStaffInventoryGuard]},
-            {path: 'sales/branch/:branch_id', component: SalesComponent, canActivate: [CompanyStaffInventoryGuard]}
+
+            {path: 'profile', component: ProfileComponent, canActivate: []},
+
+            // admin
+            {path: 'sellers', component: SellersComponent, canActivate: []},
+            {path: 'sellers/transactions', component: SellerTransactionsComponent, canActivate: []},
+            {path: 'sellers/products', component: AllSellerProductsComponent, canActivate: []},
+            {path: 'buyers', component: BuyersComponent, canActivate: []},
+            {path: 'buyers/transactions', component: BuyerTransactionsComponent, canActivate: []},
+            {path: 'vouchers', component: VouchersComponent, canActivate: []},
+
+            // buyer
+            {path: 'products', component: ProductsComponent, canActivate: [BuyerGuard]},
+            {path: 'cart', component: CartComponent, canActivate: []},
+            {path: 'buyer-orders', component: BuyerOrdersComponent, canActivate: []},
+            {path: 'wishlist', component: WishlistComponent, canActivate: []},
+            {path: 'checkout', component: CheckoutComponent, canActivate: []},
+
+            // seller
+            {path: 'seller-products', component: SellerProductsComponent, canActivate: []},
+            {path: 'seller-orders', component: SellerOrdersComponent, canActivate: []},
         ]
     },
 

@@ -1,0 +1,53 @@
+<div class="modal-header">
+    <div class="modal-headline">
+        <h5 class="modal-title">Add Voucher</h5>
+    </div>
+
+</div>
+<div class="modal-body">
+    <form>
+        <label>Name</label>
+        <input type="text" name="name" required [(ngModel)]="voucher.name">
+        <error-handler [errors]="errorResponse.errors" [validate]="'name'"></error-handler>
+
+        <label>
+            Voucher Code
+            <span class="important">*</span>
+        </label>
+        <input type="text" name="code" required [(ngModel)]="voucher.code">
+        <error-handler [errors]="errorResponse.errors" [validate]="'code'"></error-handler>
+
+        <label>Start Date</label>
+        <input type="text" class="form-control" name="start" [(ngModel)]="voucher.start"
+               placeholder="yyyy-mm-dd" ngbDatepicker #start="ngbDatepicker" (click)="start.toggle()">
+        <error-handler [errors]="errorResponse.errors" [validate]="'start'"></error-handler>
+
+        <label>End Date</label>
+        <input type="text" class="form-control" name="end" [(ngModel)]="voucher.end"
+               placeholder="yyyy-mm-dd" ngbDatepicker #end="ngbDatepicker" (click)="end.toggle()">
+        <error-handler [errors]="errorResponse.errors" [validate]="'end'"></error-handler>
+
+        <label>Type<span class="important">*</span></label>
+        <select name="discount_type" [(ngModel)]="voucher.discount_type">
+            <option value="percent">Percent Discount</option>
+            <option value="fixed">Fixed Amount</option>
+        </select>
+        <error-handler [errors]="errorResponse.errors" [validate]="'discount_type'"></error-handler>
+
+        <label>Discount</label>
+        <input type="number" name="discount" required [(ngModel)]="voucher.discount">
+        <error-handler [errors]="errorResponse.errors" [validate]="'discount'"></error-handler>
+
+        <label>Status</label>
+        <select name="status" class="form-group" [(ngModel)]="voucher.status">
+            <option value="active">ACTIVE</option>
+            <option value="inactive">INACTIVE</option>
+        </select>
+        <error-handler [errors]="errorResponse.errors" [validate]="'status'"></error-handler>
+
+    </form>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" (click)="activeModal.close('Close click')">Close</button>
+    <button type="button" class="btn btn-primary" (click)="onAdd()">Add</button>
+</div>

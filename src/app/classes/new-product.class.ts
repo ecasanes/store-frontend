@@ -18,6 +18,7 @@ export class NewProduct {
     image_url: string;
     status: string;
     product_category_id: number;
+    product_condition_id: number;
     variations: Array<ProductVariation> = [];
 
     addNewVariation(){

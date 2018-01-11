@@ -10,7 +10,21 @@ export class AlertService {
 
     }
 
-    confirm(title: string, description: string = "") {
+    input(title: string, description: string = "") {
+
+        return this.swal.info({
+            title: title,
+            text: description,
+            input:'number',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: "Confirm"
+        });
+
+    }
+
+    confirm(title: string, description: string = "", buttonText: string = "Yes") {
 
         return this.swal.warning({
             title: title,
@@ -18,7 +32,20 @@ export class AlertService {
             showCancelButton: true,
             confirmButtonColor: '#d33',
             cancelButtonColor: '#3085d6',
-            confirmButtonText: "Yes"
+            confirmButtonText: buttonText
+        });
+
+    }
+
+    confirmSuccess(title: string = "Confirm?", description: string = "", confirmButtonText: string = "OK, delete it!") {
+
+        return this.swal.info({
+            title: title,
+            text: description,
+            showCancelButton: false,
+            confirmButtonColor: 'green',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: confirmButtonText,
         });
 
     }

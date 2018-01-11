@@ -1,0 +1,38 @@
+<panel-title title="Vouchers"></panel-title>
+<section class="panel-content">
+
+  <div class="container animated fadeIn">
+
+    <button (click)="onCreate()" class="btn btn-success pull-right"><i class="fa fa-plus"></i> Create New Voucher</button>
+    <br/>
+    <br/>
+
+    <table class="table table-responsive">
+      <thead>
+      <tr>
+        <th>NAME</th>
+        <th>CODE</th>
+        <th>START</th>
+        <th>END</th>
+        <th>DISCOUNT TYPE</th>
+        <th>DISCOUNT</th>
+        <th>ACTION</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let voucher of vouchers">
+        <td>{{voucher.name}}</td>
+        <td>{{voucher.code}}</td>
+        <td>{{voucher.start | date}}</td>
+        <td>{{voucher.end | date}}</td>
+        <td>{{voucher.discount_type}}</td>
+        <td>{{voucher.discount}}</td>
+        <td class="actions">
+          <a (click)="onEdit(voucher)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+          <a (click)="onDelete(voucher.id)"><i class="fa fa-trash" aria-hidden="true"></i></a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

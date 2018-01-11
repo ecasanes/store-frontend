@@ -1,0 +1,59 @@
+<panel-title title="My Cart"></panel-title>
+
+<section class="panel-content">
+
+    <div class="container animated fadeIn">
+
+        <div class="row">
+            <div class="col-xs-12 col-sm-6">
+
+                <div class="cart-totals">
+                    <p>Total Price: <span class="price">Php {{totalPrice | number : '1.2-2'}}</span></p>
+                    <p>Total Shipping Fee: <span class="price">Php {{totalShippingFee | number : '1.2-2'}}</span></p>
+                </div>
+
+            </div>
+            <div class="col-xs-12 col-sm-6">
+                <button *ngIf="totalPrice>0" (click)="onCheckout()" class="btn btn-success pull-right">
+                    <i class="fa fa-credit-card"></i>
+                    Checkout
+                </button>
+            </div>
+        </div>
+
+        <br/>
+
+        <div class="card product-card animated fadeIn" *ngFor="let product of products | filter:'in_cart':1">
+            <!--<img class="card-img-top" src="..." alt="Card image cap">-->
+            <div class="card-block">
+                <h4 class="card-title">{{product.name}}</h4>
+                <p class="card-text">
+                    {{product.description}}
+                </p>
+
+                <div class="price-details">
+                    <p>Stocks Left: <span class="price" [class.text-danger]="product.total_branch_quantity<=0">{{product.total_branch_quantity | number}}</span>
+                    </p>
+                    <p>Price: Php <span class="price">{{product.selling_price | number : '2.2-2'}}</span></p>
+                    <p>Shipping Fee: Php <span class="price">{{product.shipping_price | number: '2.2-2'}}</span></p>
+                    <div class="cart-quantity-container">
+                        QTY:
+                        <a class="cart-quantity-action action-danger" (click)="onDecrementCartQuantity(product)"><span
+                                class="fa fa-minus"></span></a>
+                        <span class="cart-quantity">{{product.cart_quantity | number}}</span>
+                        <a class="cart-quantity-action action-success" (click)="onIncrementCartQuantity(product)"><span
+                                class="fa fa-plus"></span></a>
+                    </div>
+                </div>
+
+                <a id="close-button" *ngIf="product.in_cart==1" class="action-button text-danger" (click)="onRemoveInCart(product)">
+                    <i class="fa fa-close"></i>
+                </a>
+
+
+            </div>
+        </div>
+
+    </div>
+
+</section>

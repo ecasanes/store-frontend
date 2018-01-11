@@ -1,81 +1,35 @@
-<!--
-<button class="btn btn-primary" (click)="getProducts()">GET ALL</button>
-<app-product *ngFor="let product of products" [product]="product" (productDeleted)="productDeleted($event)"></app-product>-->
+<panel-title title="Products"></panel-title>
 
-<section class="panel-header">
-    <div class="panel-details">
-        <div class="details">
-            <h1>{{panelTitle}}</h1>
-            <span class="sub-info"><i class="fa fa-th-large" aria-hidden="true"></i> {{panelDescription}}</span>
-        </div>
-
-        <div class="actions">
-            <button class="btn-action" (click)="openAddProductModal()">ADD PRODUCT</button>
-            <button class="btn-action" (click)="openAddCategoryModal()">ADD CATEGORY</button>
-            <button class="btn-action" (click)="openExportModal(products)">EXPORT DATA</button>
-        </div>
-
-    </div>
-    <div class="panel-nav">
-        <ul>
-            <li [class.active]="router.url == '/products'">
-                <a [routerLink]="['/products']">ALL</a>
-            </li>
-            <li *ngFor="let category of categories" [class.active]="router.url == '/products/categories/'+category.id">
-                <a [routerLink]="['/products/categories',category.id]">{{category.name}}</a>
-            </li>
-        </ul>
-    </div>
-</section>
 <section class="panel-content">
 
-    <panel-loading [load]="loadingData"></panel-loading>
+    <div class="container animated fadeIn">
 
-    <div class="container animated fadeIn" *ngIf="!loadingData">
-        <p *ngIf="productsMaxLength<=0">No Products Found</p>
-        <table class="table table-responsive" *ngIf="productsMaxLength>0">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>NAME</th>
-                <th>CATEGORY</th>
-                <th>COST PRICE</th>
-                <th>SELLING PRICE</th>
-                <th>FRANCHISEE PRICE</th>
-                <th>WAREHOUSE</th>
-                <th>TOTAL</th>
-                <th>ACTIONS</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let product of products">
-                <th>{{product.id}}</th>
-                <td>
-                    {{product.name}}
-                    ({{product.size | number}} {{product.metrics}})
-                </td>
-                <td>{{product.category}}</td>
-                <td>Php {{product.cost_price | number : '1.2-2'}}</td>
-                <td>Php {{product.selling_price | number : '1.2-2'}}</td>
-                <td>Php {{product.franchisee_price | number : '1.2-2'}}</td>
-                <td>{{product.company_quantity | number}}</td>
-                <td>{{product.total_quantity | number}}</td>
-                <td class="actions">
+        <div class="card product-card animated fadeIn" *ngFor="let product of products">
+            <!--<img class="card-img-top" src="..." alt="Card image cap">-->
+            <div class="card-block">
+                <h4 class="card-title">{{product.name}}</h4>
+                <p class="card-text">
+                    {{product.description}}
+                </p>
 
-                    <a (click)="onRestock(product)"><i class="fa fa-plus" aria-hidden="true"></i></a>
-                    <a (click)="onReturnStock(product)"><i class="fa fa-minus" aria-hidden="true"></i></a>
-                    <a (click)="onEdit(product)"><i class="fa fa-pencil" aria-hidden="true"></i></a>
+                <div class="price-details">
+                    <p>Stocks Left: <span class="price" [class.text-danger]="product.total_branch_quantity<=0">{{product.total_branch_quantity | number}}</span></p>
+                    <p>Price: Php <span class="price">{{product.selling_price | number : '2.2-2'}}</span></p>
+                    <p>Shipping Fee: Php <span class="price">{{product.shipping_price | number: '2.2-2'}}</span></p>
+                </div>
 
-                    <a (click)="onDelete(product.id)"><i class="fa fa-trash" aria-hidden="true"></i></a>
 
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        <div class="pagination" *ngIf="productsMaxLength>0">
-            <ngb-pagination [pageSize]="productsLimit" (pageChange)="selectPage($event)"
-                            [collectionSize]="productsMaxLength" [(page)]="productsCurrentPage" [maxSize]="4"
-                            [rotate]="true" [ellipses]="false" [boundaryLinks]="false"></ngb-pagination>
+                <div class="pull-right">
+                    <!--<a class="action-button text-primary" (click)="onView(product)"><i class="fa fa-eye"></i></a>-->
+                    <a *ngIf="product.in_wishlist==0" class="action-button text-primary" (click)="onAddToWishList(product)"><i class="fa fa-heart-o"></i></a>
+                    <a *ngIf="product.in_wishlist==1" class="action-button text-danger" (click)="onRemoveInWishList(product)"><i class="fa fa-heart"></i></a>
+                    <a *ngIf="product.in_cart==0" class="action-button text-primary" (click)="onAddToCart(product)"><i class="fa fa-shopping-cart"></i></a>
+                    <a *ngIf="product.in_cart==1" class="action-button text-success" (click)="onRemoveInCart(product)"><i class="fa fa-cart-plus"></i></a>
+                </div>
+
+            </div>
         </div>
+
     </div>
+
 </section>

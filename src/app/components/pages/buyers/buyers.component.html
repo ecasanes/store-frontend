@@ -1,0 +1,29 @@
+<panel-title title="Manage Account (Buyers)"></panel-title>
+<section class="panel-content">
+
+  <div class="container animated fadeIn">
+
+    <table class="table table-responsive">
+      <thead>
+      <tr>
+        <th>NAME</th>
+        <th>EMAIL</th>
+        <th>STATUS</th>
+        <th>DATE</th>
+        <th>ACTION</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let user of buyers">
+        <td>{{user.firstname}} {{user.middlename}} {{user.lastname}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.status}}</td>
+        <td>{{user.created_at | date}}</td>
+        <td class="actions">
+          <a (click)="onView(user)"><i class="fa fa-eye" aria-hidden="true"></i></a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

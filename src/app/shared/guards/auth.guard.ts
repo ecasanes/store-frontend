@@ -16,7 +16,7 @@ export class AuthGuard implements CanActivate {
         const isLoggedIn = this.authService.isLoggedIn();
 
         if(!isLoggedIn){
-            this.redirectToLogin();
+            this.redirectToProducts();
             return false;
         }
 
@@ -30,6 +30,16 @@ export class AuthGuard implements CanActivate {
             })
             .catch(function(){
                 console.log('error');
+            });
+    }
+
+    redirectToProducts() {
+        this.router.navigate(["/dashboard-products"])
+            .then(function(){
+                console.log('success');
+            })
+            .catch(function(error){
+                console.log('error', error);
             });
     }
 }

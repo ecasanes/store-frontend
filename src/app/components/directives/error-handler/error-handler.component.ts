@@ -15,8 +15,8 @@ export class ErrorHandlerComponent implements OnChanges {
   }
 
   ngOnChanges() {
-    console.log('errors: ', this.errors);
-    console.log('validate: ', this.validate);
+    //console.log('errors: ', this.errors);
+    //console.log('validate: ', this.validate);
   }
 
 }

@@ -1,0 +1,33 @@
+<panel-title title="Manage Account (Sellers)"></panel-title>
+<section class="panel-content">
+
+  <div class="container animated fadeIn">
+
+    <button (click)="onCreate()" class="btn btn-success pull-right"><i class="fa fa-plus"></i> Create New Account</button>
+    <br/>
+    <br/>
+
+    <table class="table table-responsive">
+      <thead>
+      <tr>
+        <th>NAME</th>
+        <th>EMAIL</th>
+        <th>STATUS</th>
+        <th>DATE</th>
+        <th>ACTION</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let user of sellers">
+        <td>{{user.firstname}} {{user.middlename}} {{user.lastname}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.status}}</td>
+        <td>{{user.created_at | date}}</td>
+        <td class="actions">
+          <a (click)="onDelete(user.id)"><i class="fa fa-trash" aria-hidden="true"></i></a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</section>

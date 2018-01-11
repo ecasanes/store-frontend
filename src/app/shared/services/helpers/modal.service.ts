@@ -11,7 +11,7 @@ export class ModalService {
 
     }
 
-    open(content:any, newOptions:NgbModalOptions = null): NgbModalRef {
+    open(content:any, newOptions:NgbModalOptions = null, bypassAuth: boolean = false): NgbModalRef {
 
         const options: NgbModalOptions = {
             keyboard: false,
@@ -26,6 +26,10 @@ export class ModalService {
 
         if(typeof newOptions.size != 'undefined'){
             options.size = newOptions.size;
+        }
+
+        if(bypassAuth){
+            return this.modal.open(content, options);
         }
 
         if(this.authService.isLoggedIn()){

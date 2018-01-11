@@ -15,11 +15,9 @@ export class AuthService {
     public confirm = new EventEmitter<boolean>();
     public dismissCurrentModal = new EventEmitter<boolean>();
 
-    private adminRole:string = Constants.getAdminRole;
-    private companyRole:string = Constants.getCompanyRole;
-    private companyStaffRole:string = Constants.getCompanyStaffRole;
-    private inventoryPermission:string = Constants.getInventoryPermission;
-    private salesPermission:string = Constants.getSalesPermission;
+    private adminRole:string = Constants.adminRole;
+    private buyerRole:string = Constants.buyerRole;
+    private sellerRole:string = Constants.sellerRole;
 
     constructor(private http: Http) {
 
@@ -63,22 +61,6 @@ export class AuthService {
 
     }
 
-    signUp(email: string, password: string, firstname: string, lastname: string) {
-
-        const userData = {
-            email: email,
-            password: password,
-            firstname: firstname,
-            lastname: lastname
-        };
-
-        const headers = new Headers({
-            'Content-Type': 'application/json'
-        });
-
-        return this.http.post(this.baseUrl + '/register', userData, {headers: headers})
-    }
-
     signIn(email: string, password: string) {
 
         const userData = {
@@ -95,6 +77,7 @@ export class AuthService {
                 (response: Response) => {
                     const token = response.json().token;
                     const decoded = this.decodeToken(token);
+                    console.log('decoded: ', decoded);
                     return {
                         token: token,
                         decoded: decoded
@@ -181,6 +164,40 @@ export class AuthService {
         return decodedTokenData.permissions;
     }
 
+    getStoreId(): number {
+
+        const token = this.getToken();
+
+        if (typeof token === 'undefined' || token === null) {
+            return null;
+        }
+
+        const decodedTokenData = this.decodeToken(token);
+
+        if (typeof decodedTokenData.store_id == 'undefined') {
+            return null;
+        }
+
+        return decodedTokenData.store_id;
+    }
+
+    getUserId(): number {
+
+        const token = this.getToken();
+
+        if (typeof token === 'undefined' || token === null) {
+            return null;
+        }
+
+        const decodedTokenData = this.decodeToken(token);
+
+        if (typeof decodedTokenData.user_id == 'undefined') {
+            return null;
+        }
+
+        return decodedTokenData.user_id;
+    }
+
     decodeToken(token) {
         const base64Url = token.split('.')[1];
         const base64 = base64Url.replace('-', '+').replace('_', '/');
@@ -207,38 +224,21 @@ export class AuthService {
 
     }
 
-    validateCompanyPrivileges(): boolean{
+    validateAdminPrivileges(): boolean{
 
-        return this.validateUserPrivileges([this.adminRole,this.companyRole]);
+        return this.validateUserPrivileges([this.adminRole]);
 
     }
 
-    validateCompanyStaffPrivileges(permissionCode:string){
+    validateSellerPrivileges(): boolean{
 
-        let hasPrivilege = this.validateCompanyPrivileges();
+        return this.validateUserPrivileges([this.sellerRole]);
 
-        if(hasPrivilege){
-            return true;
-        }
+    }
 
-        hasPrivilege = this.validateUserPrivileges([this.companyStaffRole]);
+    validateBuyerPrivileges(): boolean{
 
-        if(!hasPrivilege){
-            return false;
-        }
-
-        const permissions = this.getPermissions();
-        let companyStaffPrivilege = false;
-
-        permissions.forEach(function(permission){
-
-            if(permission == permissionCode){
-                companyStaffPrivilege = true;
-            }
-
-        });
-
-        return companyStaffPrivilege;
+        return this.validateUserPrivileges([this.buyerRole]);
 
     }
 }

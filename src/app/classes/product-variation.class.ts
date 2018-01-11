@@ -1,10 +1,9 @@
-import {Constants} from "../shared/constants";
 export class ProductVariation {
 
     constructor() {
         this.size = null;
         this.name = "";
-        this.metrics = Constants.defaultMetrics;
+        this.metrics = 'pc';
         this.quantity = null;
         this.cost_price = null;
         this.selling_price = null;
@@ -20,11 +19,15 @@ export class ProductVariation {
     quantity: number;
     cost_price: number;
     selling_price: number;
+    shipping_price: number;
     franchisee_price: number;
     status: string;
     product_id: number;
 
     image_url: string;
+
+    category: string;
+    condition: string;
 
     branch_quantity: number;
     company_quantity: number;
@@ -36,6 +39,10 @@ export class ProductVariation {
 
     subtotal:number = 0;
     returned_quantity:number = 0;
+
+    seller_firstname: string;
+    seller_middlename: string;
+    seller_lastname: string;
 
     isValid(): boolean {
 

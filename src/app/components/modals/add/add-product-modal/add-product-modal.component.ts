@@ -28,12 +28,14 @@ export class AddProductModalComponent implements OnInit {
     @Input() name;
 
     categories: ProductCategory[];
+    conditions: ProductCategory[];
+
     category: ProductCategory;
     product: NewProduct = new NewProduct();
     productImage: File;
     productImageName: string = "";
     productImageUrl: SafeUrl; // "https://placeimg.com/640/480/tech/grayscale";
-    metrics: any = Constants.getMetrics;
+    metrics: any = [];
 
     slugService: Slug = new Slug('default');
 
@@ -48,6 +50,7 @@ export class AddProductModalComponent implements OnInit {
     ) {
         this.checkSession();
         this.getCategories();
+        this.getConditions();
     }
 
     ngOnInit() {
@@ -80,6 +83,18 @@ export class AddProductModalComponent implements OnInit {
             .subscribe(
                 (response) => {
                     this.categories = response.data;
+                },
+                (error: Response) => {
+
+                }
+            )
+    }
+
+    getConditions() {
+        this.productService.getConditionsFromModal()
+            .subscribe(
+                (response) => {
+                    this.conditions = response.data;
                 },
                 (error: Response) => {
 

@@ -7,6 +7,7 @@ import {ProductCategory} from "../../../classes";
 export class DashboardEventService {
 
     public onGetCategories: EventEmitter<ProductCategory[]> = new EventEmitter<ProductCategory[]>();
+    public onCartChange: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     constructor() {
 

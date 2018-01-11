@@ -1,0 +1,24 @@
+<div class="login-container">
+  <div class="container flex-direction">
+    <div class="content-two">
+      <div class="login-wrapper">
+        <div class="form-wrapper">
+          <form class="login-form" (ngSubmit)="signIn(f)" #f="ngForm">
+            <span id="error">{{error}}</span>
+            <span id="success"></span>
+            <label>Email</label>
+            <input type="email" name="email" id="email" ngModel required>
+            <error-handler [errors]="errorResponse.errors" [validate]="'email'"></error-handler>
+            <label>Password</label>
+            <input type="password" name="password" id="password" ngModel required>
+            <error-handler [errors]="errorResponse.errors" [validate]="'password'"></error-handler>
+            <a class="register-link" (click)="onRegister()">Register new Buyer</a>
+            <button type="submit" class="btn-main" id="signin">
+              LOGIN
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

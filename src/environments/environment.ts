@@ -5,9 +5,8 @@
 
 export const environment = {
   production: false,
-  //url: 'http://172.104.181.122/'
   //url: 'http://localhost:8000/'
-  url: 'http://ecasanes.xyz/'
+  url: 'http://ecasanes.com/store-api/public/'
 
 };
 

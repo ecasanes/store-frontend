@@ -1,0 +1,43 @@
+
+<div class="modal-header">
+  <div class="modal-headline">
+    <h5 class="modal-title">{{panelTitle}}</h5>
+  </div>
+
+</div>
+<div class="modal-body">
+
+  <alert-error-handler [errorResponse]="errorResponse" [type]="'bullet'"></alert-error-handler>
+
+  <form #f="ngForm">
+
+    <div class="row">
+
+      <div class="col-xs-12 col-sm-12">
+
+        <label>Firstname<span class="important">*</span></label>
+        <input [disabled]="isReadOnly" type="text" name="firstname" required [(ngModel)]="user.firstname">
+        <error-handler [errors]="errorResponse.errors" [validate]="'firstname'"></error-handler>
+
+        <label>Lastname<span class="important">*</span></label>
+        <input [disabled]="isReadOnly" type="text" name="lastname" required [(ngModel)]="user.lastname">
+        <error-handler [errors]="errorResponse.errors" [validate]="'lastname'"></error-handler>
+
+        <label>Middlename<span class="important">*</span></label>
+        <input [disabled]="isReadOnly" type="text" name="middlename" required [(ngModel)]="user.middlename">
+        <error-handler [errors]="errorResponse.errors" [validate]="'middlename'"></error-handler>
+
+        <label>Email<span class="important">*</span></label>
+        <input [disabled]="isReadOnly" type="email" name="email" required [(ngModel)]="user.email">
+        <error-handler [errors]="errorResponse.errors" [validate]="'email'"></error-handler>
+
+      </div>
+
+    </div>
+
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="activeModal.close('Close click')">Close</button>
+  <button *ngIf="!isReadOnly" type="button" class="btn btn-primary" (click)="onUpdate()">Save changes</button>
+</div>

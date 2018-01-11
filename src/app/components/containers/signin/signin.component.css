@@ -1,8 +1,8 @@
-/*******/
+
 .container {
     display: inline-flex;
     flex-wrap: wrap;
-    margin-top: 10%;
+    margin-top: 8%;
     margin-left: 50px;
     justify-content: center;
 
@@ -12,7 +12,7 @@
     flex-direction:row;
   }
   .content-one{
-    background-image: url('/assets/background.png');    
+    background-image: url('/assets/background.png');
     background-size: cover;
     width: 310px;
     height: 360px;
@@ -20,20 +20,17 @@
     background-color: #354053 ;
     background-position-y: 60px;
     background-repeat: no-repeat;
-    border-radius: 20px 0 0 20px; 
+    border-radius: 20px 0 0 20px;
     -webkit-box-shadow: 3px 3px 5px 6px #ccc;  /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
     -moz-box-shadow:    3px 3px 5px 6px #ccc;  /* Firefox 3.5 - 3.6 */
     box-shadow:         3px 6px 6px 1px #ccc;  /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
   }
-  
+
   .content-two{
-    background-color:#ffffff;
-    width: 540px;
-    height: 360px;
-    border-radius: 0 20px 20px 0;
-    -webkit-box-shadow: 3px 3px 3px 0px #ccc; /* Safari 3-4, iOS 4.0.2 - 4.2, Android 2.3+ */
-    -moz-box-shadow: 3px 3px 3px 0px #ccc; /* Firefox 3.5 - 3.6 */
-    box-shadow: 3px 6px 6px 0px #ccc; /* Opera 10.5, IE 9, Firefox 4+, Chrome 6+, iOS 5 */
+      background-color: #ffffff;
+      width: 540px;
+      height: 300px;
+      border: 1px solid #ccc;
 }
 
 .icon {
@@ -87,4 +84,7 @@ label b {
     font-size: 12px;
 }
 
+.register-link{
+    color:blue !important;
+}
 

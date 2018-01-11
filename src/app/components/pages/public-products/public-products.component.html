@@ -1,0 +1,53 @@
+<section class="panel-header" style="height:60px;">
+  <div class="panel-details">
+    <div class="details">
+      <h1>DTI Store</h1>
+    </div>
+    <div class="links">
+      <ul>
+        <li>
+          <a (click)="onSignup()" style="border-right:1px solid #cccccc;">Signup</a>
+        </li>
+        <li (click)="onLogin()">
+          <a>Login</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="panel-content">
+
+  <div class="container animated fadeIn">
+
+    <p *ngIf="products.length<=0">No Products</p>
+
+    <div class="card product-card animated fadeIn" *ngFor="let product of products">
+      <!--<img class="card-img-top" src="..." alt="Card image cap">-->
+      <div class="card-block">
+        <h4 class="card-title">{{product.name}}</h4>
+        <p class="card-text">
+          {{product.description}}
+        </p>
+
+        <div class="price-details">
+          <p>Stocks Left: <span class="price" [class.text-danger]="product.total_branch_quantity<=0">{{product.total_branch_quantity | number}}</span></p>
+          <p>Price: Php <span class="price">{{product.selling_price | number : '2.2-2'}}</span></p>
+          <p>Shipping Fee: Php <span class="price">{{product.shipping_price | number: '2.2-2'}}</span></p>
+        </div>
+
+
+        <div class="pull-right">
+          <!--<a class="action-button text-primary" (click)="onView(product)"><i class="fa fa-eye"></i></a>-->
+          <a *ngIf="product.in_wishlist==0" class="action-button text-primary" (click)="onAddToWishList(product)"><i class="fa fa-heart-o"></i></a>
+          <a *ngIf="product.in_wishlist==1" class="action-button text-danger" (click)="onRemoveInWishList(product)"><i class="fa fa-heart"></i></a>
+          <a *ngIf="product.in_cart==0" class="action-button text-primary" (click)="onAddToCart(product)"><i class="fa fa-shopping-cart"></i></a>
+          <a *ngIf="product.in_cart==1" class="action-button text-success" (click)="onRemoveInCart(product)"><i class="fa fa-cart-plus"></i></a>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</section>

@@ -30,7 +30,7 @@ span.store-location {
 
 span.instruction {
   font-size: 13px;
-  color: #8392A0;
+  color: #ffffff;
 }
 
 
@@ -51,11 +51,12 @@ span.remaining {
 }
 
 select {
-  width: 100%;
+  padding:5px;
+  /*width: 100%;*/
   background: transparent;
-  border: none;
+  /*border: none;
   border-bottom: 1px solid #d8e2eb;
-  margin-bottom: 15px;
+  margin-bottom: 15px;*/
 }
 
 

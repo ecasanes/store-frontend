@@ -22,6 +22,7 @@ export class User {
     customer_id: string;
     firstname: string
     lastname: string;
+    middlename: string;
     branch_name: string;
     email: string;
     password: string;
@@ -38,5 +39,7 @@ export class User {
     can_void: number = 0;
     has_multiple_access: number = 0;
     sold_items:number = 0;
+    created_at: any;
+    status: string;
 
 }

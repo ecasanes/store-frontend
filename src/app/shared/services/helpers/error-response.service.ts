@@ -29,11 +29,11 @@ export class ErrorResponseService {
 
     handleError(error: any) {
 
-        console.log('handle Error: ', error);
+        //console.log('handle Error: ', error);
 
         const jsonResponse = JSON.parse(error._body);
 
-        console.log('json response: ', jsonResponse);
+        //console.log('json response: ', jsonResponse);
 
         return jsonResponse;
 

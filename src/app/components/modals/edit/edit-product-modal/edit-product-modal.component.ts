@@ -21,10 +21,12 @@ import {
 export class EditProductModalComponent implements OnInit {
 
     @Input() product: Product = new Product();
+    @Input() isReadOnly: boolean = false;
+
+    panelTitle: string = "Edit Product";
 
     categories: ProductCategory[];
-    productImage: File;
-    productImageName: string = "";
+    conditions: ProductCategory[];
 
     errorResponse: ErrorResponse = new ErrorResponse();
 
@@ -34,10 +36,16 @@ export class EditProductModalComponent implements OnInit {
                 private errorResponseService: ErrorResponseService) {
         this.checkSession();
         this.getCategories();
+        this.getConditions();
+
+        if(this.isReadOnly){
+            this.panelTitle = "View Product";
+        }
+
     }
 
     ngOnInit() {
-        this.setProductImageName(this.product);
+        console.log("PRODUCT: ", this.product);
     }
 
     checkSession() {
@@ -73,65 +81,33 @@ export class EditProductModalComponent implements OnInit {
             )
     }
 
+    getConditions() {
+        this.productService.getConditionsFromModal()
+            .subscribe(
+                (response) => {
+                    this.conditions = response.data;
+                },
+                (error: Response) => {
+
+                }
+            )
+    }
+
     onUpdate() {
 
         console.log('the product: ', this.product);
         const product = this.product;
 
         this.productService.updateProduct(product)
-            .map(
-                (productRes) => {
-                    console.log('product response: ', productRes);
-
-                    const productId = productRes.product_id;
-                    this.uploadProductImage(productId, this.productImage);
-
-                    return productRes;
-                }
-            )
             .subscribe(
                 (productRes) => {
                     console.log('the on save data', productRes);
                     this.activeModal.close({test: 'hello'});
                 },
                 (error) => {
-                    //console.log('must handle this error: ', error);
                     this.errorResponse = this.errorResponseService.handleError(error)
                 }
             );
-
-    }
-
-    uploadProductImage(productId: number, productImage: File) {
-
-        if(typeof productImage == 'undefined'){
-            return false;
-        }
-
-        this.productService.uploadProductImage(productId, productImage)
-            .subscribe(
-                (data) => console.log('success upload: ', data),
-                (error) => console.log('error upload: ', error)
-            );
-
-    }
-
-    onSelectedFile(fileEvent) {
-
-        this.productImage = fileEvent.srcElement.files[0];
-
-        if(typeof this.productImage == 'undefined'){
-            return false;
-        }
-
-        this.productImageName = this.productImage.name;
-
-        console.log('Product Image: ', this.productImage);
-    }
-
-    setProductImageName(product: Product) {
-
-        this.productImageName = product.image_url;
 
     }
 

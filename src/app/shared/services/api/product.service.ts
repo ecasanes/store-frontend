@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {Http, Response} from "@angular/http";
+import {Response} from "@angular/http";
 import "rxjs/Rx";
 import {Observable} from "rxjs/Observable";
 
@@ -19,7 +19,7 @@ export class ProductService {
 
     }
 
-    getProducts(pageNumber: number, categoryId?: number, query?: string, limit?: number): Observable<any> {
+    getProducts(pageNumber: number, categoryId?: number, query?: string, limit?: any, userId?: number): Observable<any> {
 
         if (typeof pageNumber == 'undefined') {
             pageNumber = 1;
@@ -35,12 +35,15 @@ export class ProductService {
 
         let requestUrl = this.basePath + "?page=" + pageNumber + "&limit=" + limit + "&q=" + query;
 
+        if (typeof userId !== 'undefined' && !isNaN(userId) && userId != null) {
+            requestUrl += "&user_id=" + userId;
+        }
 
         if (typeof categoryId !== 'undefined' && !isNaN(categoryId) && categoryId != null) {
             requestUrl += "&category_id=" + categoryId;
         }
 
-        return this.httpService.get(requestUrl)
+        return this.httpService.getPublic(requestUrl)
             .map(
                 (response: Response) => {
                     console.log('get products response: ', response.json());
@@ -49,14 +52,14 @@ export class ProductService {
             )
     }
 
-    getAllProductVariations(branchId?: number, categoryId?: number): Observable<any> {
+    getAllProducts(storeId?: number, categoryId?: number): Observable<any> {
 
         const limit = Constants.getNone;
 
-        let requestUrl = this.basePath + "?limit=" + limit;
+        let requestUrl = this.basePath + "?limit="+limit;
 
-        if (typeof branchId !== 'undefined' && !isNaN(branchId) && branchId != null) {
-            requestUrl += "&branch_id=" + branchId;
+        if (typeof storeId !== 'undefined' && !isNaN(storeId) && storeId != null) {
+            requestUrl += "&store_id=" + storeId;
         }
 
         if (typeof categoryId !== 'undefined' && !isNaN(categoryId) && categoryId != null) {
@@ -72,39 +75,91 @@ export class ProductService {
             )
     }
 
-    getAlerts(branchId: number = null): Observable<any> {
+    getAllPaymentMethods(): Observable<any> {
 
-        let requestUrl = this.basePath+'/alerts';
-
-        if (typeof branchId !== 'undefined' && !isNaN(branchId) && branchId != null) {
-            requestUrl += "?branch_id=" + branchId;
-        }
+        let requestUrl = this.basePath + "/payments/methods";
 
         return this.httpService.get(requestUrl)
             .map(
                 (response: Response) => {
                     console.log('response: ', response.json());
-                    return response.json();
+                    return response.json().data;
                 }
             )
     }
 
-    getProductVariationsByProductId(productId: number): Observable<any> {
+    getAllVouchers(): Observable<any> {
 
-        let requestUrl = this.basePath + "/" + productId + "/variations";
+        let requestUrl = this.basePath + "/vouchers";
 
         return this.httpService.get(requestUrl)
             .map(
                 (response: Response) => {
+                    return response.json().data;
+                }
+            )
+    }
+
+    addVoucher(voucherData: any): Observable<any> {
+
+        const body = JSON.stringify(voucherData);
+
+        let requestUrl = this.basePath + "/vouchers";
+
+        return this.httpService.post(requestUrl, body)
+            .map(
+                (response: Response) => {
                     console.log('response: ', response.json());
-                    return response.json();
+                    return response.json().data;
+                }
+            )
+    }
+
+    updateVoucher(voucherData: any): Observable<any> {
+
+        const body = JSON.stringify(voucherData);
+
+        let requestUrl = this.basePath + "/vouchers/" + voucherData.id;
+
+        return this.httpService.put(requestUrl, body)
+            .map(
+                (response: Response) => {
+                    console.log('response: ', response.json());
+                    return response.json().data;
+                }
+            )
+    }
+
+    deleteVoucher(voucherId: number): Observable<any> {
+
+        let requestUrl = this.basePath + "/vouchers/" + voucherId;
+
+        return this.httpService.destroy(requestUrl)
+            .map(
+                (response: Response) => {
+                    console.log('response: ', response.json());
+                    return response.json().data;
                 }
             )
     }
 
     getCategoriesFromModal() {
 
-        const requestUrl = this.basePath + "/categories";
+        const requestUrl = this.basePath + "/categories?limit=none";
+
+        return this.httpService.getFromModal(requestUrl)
+            .map(
+                (response: Response) => {
+                    console.log('response: ', response.json());
+                    return response.json();
+                }
+            )
+
+    }
+
+    getConditionsFromModal() {
+
+        const requestUrl = this.basePath + "/conditions?limit=none";
 
         return this.httpService.getFromModal(requestUrl)
             .map(
@@ -140,11 +195,11 @@ export class ProductService {
             );
     }
 
-    restockProduct(product: Product) {
+    restockProduct(storeId: number, product: Product) {
 
         const body = JSON.stringify(product);
 
-        const requestUrl = this.basePath + '/variations/' + product.product_variation_id + '/stocks';
+        const requestUrl = this.basePath + '/stocks/stores/' + storeId;
 
         return this.httpService.post(requestUrl, body)
             .map(
@@ -152,21 +207,84 @@ export class ProductService {
             );
     }
 
-    returnStockProduct(product: Product) {
+    addToWishlist(userId: number, productVariationId: number) {
 
-        const body = JSON.stringify(product);
+        const body = JSON.stringify({
+            user_id: userId,
+            product_variation_id: productVariationId
+        });
 
-        const requestUrl = this.basePath + '/variations/' + product.product_variation_id + '/stocks/return';
+        const requestUrl = this.basePath + '/wishlists';
 
         return this.httpService.post(requestUrl, body)
             .map(
                 (response: Response) => response.json().data
             );
+
+    }
+
+    removeInWishlist(userId: number, productVariationId: number) {
+
+        const body = JSON.stringify({
+            user_id: userId,
+            product_variation_id: productVariationId
+        });
+
+        const requestUrl = this.basePath + '/wishlists/remove';
+
+        return this.httpService.post(requestUrl, body)
+            .map(
+                (response: Response) => response.json().data
+            );
+
+    }
+
+    addToCart(userId: number, productVariationId: number, quantity: number = 1) {
+
+        const body = JSON.stringify({
+            product_variation_id: productVariationId,
+            cart_quantity: quantity
+        });
+
+        const requestUrl = this.basePath + '/carts/' + userId;
+
+        return this.httpService.post(requestUrl, body)
+            .map(
+                (response: Response) => response.json().data
+            );
+
+    }
+
+    removeInCart(userId: number, productVariationId: number) {
+
+        const body = JSON.stringify({
+            user_id: userId,
+            product_variation_id: productVariationId
+        });
+
+        const requestUrl = this.basePath + '/carts/remove';
+
+        return this.httpService.post(requestUrl, body)
+            .map(
+                (response: Response) => response.json().data
+            );
+
+    }
+
+    getCurrentCartCount(userId: number) {
+
+        const requestUrl = this.basePath + '/carts/' + userId + '/count';
+
+        return this.httpService.get(requestUrl)
+            .map(
+                (response: Response) => response.json().data
+            );
+
     }
 
     deleteProduct(id: number) {
 
-        const requestUrl = this.basePath + '/variations/' + id;
+        const requestUrl = this.basePath + '/' + id;
 
         return this.httpService.destroy(requestUrl)
             .map(
@@ -196,38 +314,16 @@ export class ProductService {
 
     }
 
-    getCompanyStocks(query?: string): Observable<any> {
+    getVoucherByCode(voucherCode: string) {
 
-        if (typeof query == 'undefined') {
-            query = "";
-        }
-
-        let requestUrl = this.basePath + "/stocks?q=" + query;
+        let requestUrl = this.basePath + "/vouchers/validate?code=" + voucherCode;
 
         return this.httpService.get(requestUrl)
             .map(
                 (response: Response) => {
-                    console.log('get products response: ', response.json());
-                    return response.json();
+                    return response.json().data;
                 }
             )
+
     }
-
-    getStocksByBranch(branchId?: number, query?: string): Observable<any> {
-
-        if (typeof query == 'undefined') {
-            query = "";
-        }
-
-        let requestUrl = this.basePath + "/stocks/branches/" + branchId + "?q=" + query;
-
-        return this.httpService.get(requestUrl)
-            .map(
-                (response: Response) => {
-                    console.log('get products response: ', response.json());
-                    return response.json();
-                }
-            )
-    }
-
 }
