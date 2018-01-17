@@ -93,4 +93,18 @@ export class UserService {
 
     }
 
+    changePassword(user: User){
+
+        const userData = JSON.stringify(user);
+        const requestUrl = this.basePath + '/current/change-password';
+
+        return this.httpService.post(requestUrl, userData)
+            .map(
+                (response: Response) => {
+                    return response.json();
+                }
+            )
+
+    }
+
 }

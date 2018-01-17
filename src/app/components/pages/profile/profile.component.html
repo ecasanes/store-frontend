@@ -1,14 +1,29 @@
 <panel-title title="Profile"></panel-title>
 
 <section class="panel-content">
+
     <div class="container">
+
         <div class="row">
             <div class="col-xs-12">
                 <div class="profile-view">
                     <p>Name: {{currentUser.firstname}} {{currentUser.lastname}}</p>
                     <p>Email: {{currentUser.email}}</p>
+                    <p>Contact Number: {{currentUser.phone}}</p>
                 </div>
             </div>
         </div>
+
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="change-password">
+                    <button class="btn btn-primary" (click)="onChangePassword()">
+                        <i class="fa fa-pencil"></i>
+                        Edit or Change Password
+                    </button>
+                </div>
+            </div>
+        </div>
+
     </div>
 </section>

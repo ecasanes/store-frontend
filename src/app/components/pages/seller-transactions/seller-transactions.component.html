@@ -46,6 +46,11 @@
             <i class="fa fa-check"></i>
             Complete Order
           </button>
+          <button class="btn btn-success btn-sm order-btn" *ngIf="currentBuyerStatus=='to_receive_payment'"
+                  (click)="onComplete(order)">
+            <i class="fa fa-money"></i>
+            Receive Payment And Complete Order
+          </button>
         </td>
       </tr>
       </tbody>

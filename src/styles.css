@@ -16,7 +16,6 @@ body {
 }
 
 .login-container .content-one {
-    background-image: url('assets/background.png');
     background-size: cover;
     width: 310px;
     height: 360px;

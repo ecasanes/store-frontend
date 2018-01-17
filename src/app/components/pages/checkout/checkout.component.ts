@@ -168,6 +168,7 @@ export class CheckoutComponent implements OnInit {
     calculateTotalPrice() {
 
         let total = 0;
+        let totalShipping = 0;
 
         this.products.forEach(
             (product) => {
@@ -180,12 +181,12 @@ export class CheckoutComponent implements OnInit {
         this.products.forEach(
             (product) => {
                 if (product.in_cart == 1 && product.total_branch_quantity > 0) {
-                    total += parseFloat(product.quantity * product.shipping_price + '');
+                    totalShipping += parseFloat(product.shipping_price + '');
                 }
             }
         );
 
-        this.baseTotal = total;
+        this.baseTotal = total + totalShipping;
 
         if (this.currentVoucher) {
 
@@ -202,7 +203,7 @@ export class CheckoutComponent implements OnInit {
 
         }
 
-        this.totalPrice = total;
+        this.totalPrice = total + totalShipping;
 
     }
 

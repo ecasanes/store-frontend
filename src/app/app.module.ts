@@ -74,6 +74,7 @@ import { EditVoucherModalComponent } from './components/modals/edit/edit-voucher
 import { AddBuyerModalComponent } from './components/modals/add/add-buyer-modal/add-buyer-modal.component';
 import { PublicProductsComponent } from './components/pages/public-products/public-products.component';
 import { LoginModalComponent } from './components/modals/action/login-modal/login-modal.component';
+import { EditPasswordModalComponent } from './components/modals/edit/edit-password-modal/edit-password-modal.component';
 
 @NgModule({
     declarations: [
@@ -116,7 +117,8 @@ import { LoginModalComponent } from './components/modals/action/login-modal/logi
         EditVoucherModalComponent,
         AddBuyerModalComponent,
         PublicProductsComponent,
-        LoginModalComponent
+        LoginModalComponent,
+        EditPasswordModalComponent
     ],
     imports: [
         BrowserModule,
@@ -163,7 +165,8 @@ import { LoginModalComponent } from './components/modals/action/login-modal/logi
         AddVoucherModalComponent,
         EditVoucherModalComponent,
         AddBuyerModalComponent,
-        LoginModalComponent
+        LoginModalComponent,
+        EditPasswordModalComponent
     ]
 })
 

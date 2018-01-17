@@ -36,6 +36,11 @@ export class SellerTransactionsComponent implements OnInit {
             has_action: false
         },
         {
+            code: 'to_receive_payment',
+            name: 'To Receive Payment',
+            has_action: true
+        },
+        {
             code: 'to_be_completed',
             name: 'To be Completed',
             has_action: true
@@ -75,6 +80,9 @@ export class SellerTransactionsComponent implements OnInit {
             case 'shipped':
                 this.getShipped();
                 break;
+            case 'to_receive_payment':
+                this.getToReceivePayment();
+                break;
             case 'to_be_completed':
                 this.getToBeCompleted();
                 break;
@@ -105,6 +113,21 @@ export class SellerTransactionsComponent implements OnInit {
     getToShip() {
 
         this.transactionService.getAllToShipTransactions()
+            .subscribe(
+                (response) => {
+                    this.orders = response;
+                    this.loadingOrders = false;
+                },
+                (error) => {
+                    console.log('something went wrong while getting order history by code', error);
+                }
+            )
+
+    }
+
+    getToReceivePayment() {
+
+        this.transactionService.getAllToBeReceivedTransactions()
             .subscribe(
                 (response) => {
                     this.orders = response;
@@ -167,7 +190,7 @@ export class SellerTransactionsComponent implements OnInit {
         this.transactionService.completeTransactionById(order.transaction_id)
             .subscribe(
                 (response) => {
-                    this.onGetTransactionsByCode(this.orderHistoryStatusList[4]);
+                    this.onGetTransactionsByCode(this.orderHistoryStatusList[5]);
                 },
                 (error) => {
                     console.log('something went wrongwhile receiving order', error);

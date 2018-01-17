@@ -72,7 +72,7 @@ export class ProductVariation {
     }
 
     computeSubtotal(){
-        this.subtotal = this.quantity*this.selling_price;
+        this.subtotal = parseFloat(this.quantity+'')*parseFloat(this.selling_price+'');
         return this.subtotal;
     }
 

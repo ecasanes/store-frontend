@@ -36,6 +36,7 @@ export class User {
     zip:string;
     permissions:any[];
     confirm_password:string;
+    password_confirmation: string;
     can_void: number = 0;
     has_multiple_access: number = 0;
     sold_items:number = 0;

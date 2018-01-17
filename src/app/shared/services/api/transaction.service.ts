@@ -232,6 +232,17 @@ export class TransactionService {
 
     }
 
+    getAllToBeReceivedTransactions() {
+
+        let requestUrl = this.basePath + '?buyer_status=received&seller_status=delivered';
+
+        return this.httpService.get(requestUrl)
+            .map(
+                (response: Response) => response.json().data
+            );
+
+    }
+
     getAllToBeCompletedTransactions() {
 
         let requestUrl = this.basePath + '?buyer_status=received&seller_status=received';

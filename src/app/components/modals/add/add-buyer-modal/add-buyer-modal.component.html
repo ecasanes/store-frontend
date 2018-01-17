@@ -19,6 +19,10 @@
     <input type="text" name="lastname" required [(ngModel)]="user.lastname" >
     <error-handler [errors]="errorResponse.errors" [validate]="'lastname'"></error-handler>
 
+    <label>Phone<span class="important">*</span></label>
+    <input type="text" name="phone" required [(ngModel)]="user.phone" >
+    <error-handler [errors]="errorResponse.errors" [validate]="'phone'"></error-handler>
+
     <label>Email<span class="important">*</span></label>
     <input type="email" name="email" required [(ngModel)]="user.email" >
     <error-handler [errors]="errorResponse.errors" [validate]="'email'"></error-handler>
@@ -41,5 +45,8 @@
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-secondary" (click)="activeModal.close('Close click')">Close</button>
-  <button type="button" class="btn btn-primary" (click)="onAdd()">Add</button>
+  <button type="button" class="btn btn-primary" (click)="onAdd()">
+    <span *ngIf="action=='register'">Register</span>
+    <span *ngIf="action==''">Add</span>
+  </button>
 </div>
