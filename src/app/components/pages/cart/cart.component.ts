@@ -123,7 +123,7 @@ export class CartComponent implements OnInit {
         this.products.forEach(
             (product) => {
                 if(product.in_cart == 1 && product.total_branch_quantity>0){
-                    total += parseFloat(product.cart_quantity*product.shipping_price+'');
+                    total += parseFloat(product.shipping_price+'');
                 }
             }
         )

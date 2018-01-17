@@ -35,7 +35,7 @@ import {BuyerGuard} from "./shared/guards/buyer.guard";
 const APP_ROUTES: Routes = [
 
     {path: 'signin', component: SigninComponent},
-    {path: 'dashboard-products', component: PublicProductsComponent, canActivate: [GuestGuard]},
+    {path: 'dashboard-products', component: PublicProductsComponent, canActivate: []},
 
     // canActivate: [UserGuard]
 

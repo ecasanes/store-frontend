@@ -14,7 +14,7 @@ export class CategoryService {
 
     }
 
-    getCategories(pageNumber?:number, query?:string, limit?:number): Observable<any> {
+    getCategories(withProducts: boolean = false, pageNumber?:number, query?:string, limit?:number): Observable<any> {
 
         if(typeof pageNumber == 'undefined') {
             pageNumber = 1;
@@ -28,9 +28,13 @@ export class CategoryService {
             limit = 10;
         }
 
-        const requestUrl = this.basePath + '?page=' + pageNumber + '&limit=' + limit + '&q=' + query;
+        let requestUrl = this.basePath + '?page=' + pageNumber + '&limit=' + limit + '&q=' + query;
 
-        return this.httpService.get(requestUrl)
+        if(withProducts){
+            requestUrl += "&with_products=1";
+        }
+
+        return this.httpService.getPublic(requestUrl)
             .map(
                 (response: Response) => {
 

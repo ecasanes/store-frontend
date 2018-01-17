@@ -14,6 +14,7 @@ import {
 } from '../../../classes';
 import {LoginModalComponent} from "../../modals/action/login-modal/login-modal.component";
 import {AddBuyerModalComponent} from "../../modals/add/add-buyer-modal/add-buyer-modal.component";
+import {CategoryService} from "../../../shared/services/api/category.service";
 
 @Component({
     selector: 'app-public-products',
@@ -23,7 +24,7 @@ import {AddBuyerModalComponent} from "../../modals/add/add-buyer-modal/add-buyer
 export class PublicProductsComponent implements OnInit {
 
     products: Product[] = [];
-    categories: ProductCategory[];
+    categories: ProductCategory[] = [];
 
     productsMaxLength: number;
     productsCurrentLength: number;
@@ -43,12 +44,14 @@ export class PublicProductsComponent implements OnInit {
                 private authService: AuthService,
                 private productService: ProductService,
                 private modalService: ModalService,
+                private categoryService: CategoryService
     ) {
         this.userId = this.authService.getUserId();
     }
 
     ngOnInit() {
         this.getProducts();
+        this.getCategories();
     }
 
     getProducts() {
@@ -74,6 +77,20 @@ export class PublicProductsComponent implements OnInit {
                     console.log(error);
                 }
             )
+    }
+
+    getCategories() {
+
+        this.categoryService.getCategories(true)
+            .subscribe(
+                (response) => {
+                    this.categories = response.data;
+                },
+                (error) => {
+                    console.log('something went wrong while fetching categories', error);
+                }
+            )
+
     }
 
     onAddToCart(product: Product) {
@@ -123,6 +140,20 @@ export class PublicProductsComponent implements OnInit {
             .catch(
                 (error) => console.log('error', error)
             )
+
+    }
+
+    showByCategory(categoryId: number) {
+
+        this.categoryId = categoryId;
+        this.getProducts();
+
+    }
+
+    getAllProducts() {
+
+        this.categoryId = null;
+        this.getProducts();
 
     }
 

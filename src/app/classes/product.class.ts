@@ -40,7 +40,7 @@ export class Product {
 
     getTotalPrice(){
 
-        const total = (this.cart_quantity*this.selling_price)+(this.cart_quantity*this.shipping_price);
+        const total = (this.cart_quantity*this.selling_price)+(this.shipping_price);
 
         return total;
 

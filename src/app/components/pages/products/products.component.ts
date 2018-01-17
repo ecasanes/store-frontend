@@ -13,6 +13,7 @@ import {
     Product,
     ProductCategory
 } from '../../../classes';
+import {CategoryService} from "../../../shared/services/api/category.service";
 
 @Component({
     selector: 'app-products',
@@ -22,8 +23,8 @@ import {
 
 export class ProductsComponent implements OnInit, OnDestroy {
 
-    products: Product[];
-    categories: ProductCategory[];
+    products: Product[] = [];
+    categories: ProductCategory[] = [];
 
     productsMaxLength: number;
     productsCurrentLength: number;
@@ -43,12 +44,15 @@ export class ProductsComponent implements OnInit, OnDestroy {
                 private authService: AuthService,
                 private productService: ProductService,
                 private dashboardEventService: DashboardEventService,
-                private alertService: AlertService) {
+                private alertService: AlertService,
+                private categoryService: CategoryService
+    ) {
         this.userId = this.authService.getUserId();
     }
 
     ngOnInit() {
         this.getProducts();
+        this.getCategories();
     }
 
     ngOnDestroy() {
@@ -181,6 +185,35 @@ export class ProductsComponent implements OnInit, OnDestroy {
                     console.log('something went wrong while adding to wishlist', error);
                 }
             )
+
+    }
+
+
+    getCategories() {
+
+        this.categoryService.getCategories(true)
+            .subscribe(
+                (response) => {
+                    this.categories = response.data;
+                },
+                (error) => {
+                    console.log('something went wrong while fetching categories', error);
+                }
+            )
+
+    }
+
+    showByCategory(categoryId: number) {
+
+        this.categoryId = categoryId;
+        this.getProducts();
+
+    }
+
+    getAllProducts() {
+
+        this.categoryId = null;
+        this.getProducts();
 
     }
 

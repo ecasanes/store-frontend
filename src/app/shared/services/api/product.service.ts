@@ -66,7 +66,7 @@ export class ProductService {
             requestUrl += "&category_id=" + categoryId;
         }
 
-        return this.httpService.get(requestUrl)
+        return this.httpService.getPublic(requestUrl)
             .map(
                 (response: Response) => {
                     console.log('response: ', response.json());
