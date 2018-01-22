@@ -85,7 +85,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
 
     onAddToCart(product: Product) {
 
-        if (product.total_branch_quantity <= 0) {
+        if (parseFloat(product.total_branch_quantity+'') <= 0) {
             this.noStocksLeft(product);
             return;
         }
@@ -93,7 +93,7 @@ export class ProductsComponent implements OnInit, OnDestroy {
         this.alertService.input("Input Quantity").then(
             (quantity:number) => {
 
-                if(quantity>product.total_branch_quantity){
+                if(quantity>parseFloat(product.total_branch_quantity+'')){
                     this.notEnoughStocks(product);
                     return;
                 }
